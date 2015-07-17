@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Contracts\Validation\ValidationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -25,16 +26,6 @@ class MemberController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  Request  $request
@@ -42,9 +33,22 @@ class MemberController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'username' => 'required|unique:members,username|regex:/[a-zA-Z]{2,3}\d{4}/',
+        ]);
+
         $member = new Member();
 
+        $member->first_name = $request->input('first_name');
+        $member->last_name = $request->input('last_name');
+        $member->slack_id = $request->input('slack_id', '');
+        $member->username = $request->input('username');
+
         $member->save();
+
+        return response()->json($member);
     }
 
     /**
@@ -58,27 +62,10 @@ class MemberController extends Controller
         try {
             $result = Member::with('memberships')->findOrFail($id);
 
-            foreach($result->memberships as $membership) {
-                $membership->url = $membership->url();
-            }
-
-            $response = new JsonResponse($result);
+            return response()->json($result);
         } catch (ModelNotFoundException $e) {
-            $response = new JsonReponse(['error' => 'not found'], 404);
-        } finally {
-            return $response;
+            return new JsonReponse(['error' => 'not found'], 404);
         }
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
     }
 
     /**
@@ -90,7 +77,15 @@ class MemberController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $member = Member::findOrFail($id);
+
+        $member->first_name = $request->input('first_name', $member->first_name);
+        $member->last_name = $request->input('last_name', $member->last_name);
+        $member->slack_id = $request->input('slack_id', $member->slack_id);
+
+        $member->save();
+
+        return response()->json($member);
     }
 
     /**
@@ -101,6 +96,6 @@ class MemberController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Member::destroy($id);
     }
 }

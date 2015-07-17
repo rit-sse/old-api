@@ -87,3 +87,11 @@ Ensure you have the following PHP extensions enabled in your `php.ini` file:
 
 If you have issues with `Class does not exist` errors while attempting to seed
 your development database, try running `composer dump-autoload` and re-seeding.
+
+### Validation
+
+If you are using `$this->validate` in the context of a `Controller`, there are
+a few things of which you should be aware. If the `Request` does not consider
+the request to be an AJAX call, it will send a redirect response rather than
+an error. To see the validation messages, add the `X-Requested-With` header with
+a value of `XMLHttpRequest` (yes, case matters!).
