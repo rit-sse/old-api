@@ -15,69 +15,68 @@ Route::get('/', function() {
     return view('welcome');
 });
 
-Route::group(['before' => 'csrf'], function () {
-    Route::group(['prefix' => 'api'], function () {
+Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
+    Route::get('/', function() {
+        return response()->json([
+            'current_version' => '/v1',
+        ]);
+    });
+
+    Route::group(['prefix' => 'v1'], function () {
         Route::get('/', function() {
             return response()->json([
-                'current_version' => '/v1',
+                'lingo_url' => '/lingo',
+                'members_url' => '/members',
+                'memberships_url' => '/memberships',
+                'mentors_url' => '/mentors',
+                'officesr' => '/officers',
+                'quotes_url' => '/quotes',
+                'terms_url' => '/terms',
             ]);
         });
 
-        Route::group(['prefix' => 'v1'], function () {
-            Route::get('/', function() {
-                return response()->json([
-                    'lingo_url' => '/lingo',
-                    'members_url' => '/members',
-                    'memberships_url' => '/memberships',
-                    'mentors_url' => '/mentors',
-                    'officesr' => '/officers',
-                    'quotes_url' => '/quotes',
-                    'terms_url' => '/terms',
-                ]);
-            });
+        Route::resource(
+            'events',
+            'EventController',
+            ['except' => ['create']]
+        );
 
-            Route::resource(
-                'events',
-                'EventController',
-                ['except' => ['create']]
-            );
+        Route::resource(
+            'lingo',
+            'LingoController',
+            ['except' => ['create']]
+        );
 
-            Route::resource(
-                'lingo',
-                'LingoController',
-                ['except' => ['create']]
-            );
+        Route::resource(
+            'members',
+            'MemberController',
+            ['except' => ['create', 'edit']]
+        );
 
-            Route::resource(
-                'members',
-                'MemberController'
-            );
+        Route::resource(
+            'memberships',
+            'MembershipController'
+        );
 
-            Route::resource(
-                'memberships',
-                'MembershipController'
-            );
+        Route::resource(
+            'mentors',
+            'MentorController'
+        );
 
-            Route::resource(
-                'mentors',
-                'MentorController'
-            );
+        Route::resource(
+            'officers',
+            'OfficerController'
+        );
 
-            Route::resource(
-                'officers',
-                'OfficerController'
-            );
+        Route::resource(
+            'quotes',
+            'QuoteController'
+        );
 
-            Route::resource(
-                'quotes',
-                'QuoteController'
-            );
-
-            Route::resource(
-                'terms',
-                'TermController',
-                ['only' => ['index', 'show']]
-            );
-        });
+        Route::resource(
+            'terms',
+            'TermController',
+            ['only' => ['index', 'show']]
+        );
     });
 });
