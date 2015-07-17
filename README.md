@@ -15,8 +15,9 @@ To get started, follow these steps:
 
 1. Change directory into the root of the repository.
 1. Execute `composer install`.
-1. Move `.env.example` to `.env`.
+1. Copy `.env.example` to `.env`.
 1. Init app storage (sessions, cache, etc.) and the database: `./bootstrap/init_storage.sh`
+1. Generate a random app key: `php artisan key:generate`.
 1. Execute `php artisan migrate:refresh --seed`.
 1. Execute `php -S localhost:8000 server.php`.
 
