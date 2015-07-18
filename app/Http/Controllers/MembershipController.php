@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -58,7 +59,9 @@ class MembershipController extends Controller
 
             return response()->json($membership);
         } catch (ModelNotFoundException $e) {
-            return new JsonResponse(['error' => 'not found'], 404);
+            return new JsonResponse(
+                ['error' => 'not found'], Response::HTTP_NOT_FOUND
+            );
         }
     }
 

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
@@ -49,11 +50,11 @@ class TermController extends Controller
         try {
             $term = Term::findOrFail($id);
 
-            $response = new JsonResponse($term);
+            return response()->json($term);
         } catch (ModelNotFoundException $e) {
-            $response = new JsonResponse(['error' => 'not found'], 404);
-        } finally {
-            return $response;
+            return new JsonResponse(
+                ['error' => 'not found'], Response::HTTP_NOT_FOUND
+            );
         }
     }
 }

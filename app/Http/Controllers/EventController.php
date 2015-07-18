@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Event;
 use App\Http\Requests;
@@ -48,7 +49,9 @@ class EventController extends Controller
 
             return response()->json($event);
         } catch (ModelNotFoundException $e) {
-            return new JsonReponse(['error' => 'not found'], 404);
+            return new JsonReponse(
+                ['error' => 'not found'], Response::HTTP_NOT_FOUND
+            );
         }
     }
 

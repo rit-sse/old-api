@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 use App\Officer;
 
@@ -70,7 +71,9 @@ class OfficerController extends Controller
 
             return response()->json($officer);
         } catch (ModelNotFoundException $e) {
-            return new JsonResponse(['error' => 'not found'], 404);
+            return new JsonResponse(
+                ['error' => 'not found'], Response::HTTP_NOT_FOUND
+            );
         }
     }
 
