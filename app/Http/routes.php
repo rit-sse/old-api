@@ -73,6 +73,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ['except' => ['create', 'edit']]
         );
 
+        Route::get('terms/current_term', 'TermController@current_term');
         Route::resource(
             'terms',
             'TermController',

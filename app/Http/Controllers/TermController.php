@@ -12,6 +12,20 @@ use App\Term;
 
 class TermController extends Controller
 {
+    public function current_term()
+    {
+        $timezone = new \DateTimeZone('America/New_York');
+        $date = new \DateTime('now', $timezone);
+
+        $month = intval($date->format('m'));
+        $year = $date->format('Y');
+        $name = ((12 >= $month && $month >= 8) || $month === 1) ? 'Fall' : 'Spring';
+
+        $term = Term::where(['name' => $name, 'year' => $year])->first();
+
+        return response()->json($term);
+    }
+
     /**
      * Display a listing of the resource.
      *
