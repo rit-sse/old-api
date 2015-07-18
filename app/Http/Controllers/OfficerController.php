@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
 use App\Officer;
 
 class OfficerController extends Controller
@@ -20,10 +19,6 @@ class OfficerController extends Controller
     {
         $officers = Officer::all();
 
-        foreach($officers as $officer) {
-            $officer->member_url = $officer->member->url();
-        }
-
         return response()->json($officers);
     }
 
@@ -35,7 +30,31 @@ class OfficerController extends Controller
      */
     public function store(Request $request)
     {
-        $officer = new Office();
+        $this->validate($request, [
+            'member_id' => 'required',
+            'position' => 'required',
+        ]);
+
+        // FIXME: Replace with internal route to /terms/current_term
+        $term_id = 1;
+
+        $officer = Officer::where(
+            ['position' => $request->input('position'), 'term_id' => $term_id]
+        );
+
+        if ($officer) {
+            $officer->delete();
+        }
+
+        $officer = new Officer();
+
+        $officer->member_id = $request->input('member_id');
+        $officer->position = $request->input('position');
+        $officer->term_id = $term_id;
+
+        $officer->save();
+
+        return response()->json($officer);
     }
 
     /**
@@ -46,19 +65,13 @@ class OfficerController extends Controller
      */
     public function show($id)
     {
-        //
-    }
+        try {
+            $officer = Officer::findOrFail($id);
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
+            return response()->json($officer);
+        } catch (ModelNotFoundException $e) {
+            return new JsonResponse(['error' => 'not found'], 404);
+        }
     }
 
     /**
@@ -69,6 +82,6 @@ class OfficerController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Officer::destroy($id);
     }
 }

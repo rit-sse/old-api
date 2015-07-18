@@ -19,8 +19,10 @@ class CreateOfficersTable extends Migration
 
             $table->integer('member_id')->unsigned();
             $table->string('position');
+            $table->integer('term_id')->unsigned();
 
             $table->foreign('member_id')->references('id')->on('members');
+            $table->foreign('term_id')->references('id')->on('terms');
 
             $table->softDeletes();
             $table->timestamps();

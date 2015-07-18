@@ -34,6 +34,14 @@ class Officer extends Model
         return $this->belongsTo('App\Member');
     }
 
+    /**
+     * Establishes the One To One relationship with Term.
+     */
+    public function term()
+    {
+        return $this->belongsTo('App\Term');
+    }
+
     public function url()
     {
         return '/officers/' . $this->id;
