@@ -37,6 +37,17 @@ The API root of the application is currently set to `/api/v1`. This route is
 also controlled by `app/Http/routes.php`, the definition of which is controlled
 by the `Route::group` syntax.
 
+### `/committees`
+
+The model for a `Committee` is location in `app/Committee.php` and the controller
+is located in `app/Http/Controllers/CommitteeController.php`.
+
+#### `/committees/{id}/members`
+
+This route is the result of an inverse `Many To Many` relationship (`belongsToMany`),
+and the controller for the relationship is located in
+`app/Http/Controllers/CommitteeMemberController.php`.
+
 ### `/events`
 
 The model for an `Event` is location in `app/Event.php` and the controller is
