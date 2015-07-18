@@ -14,8 +14,8 @@ things as events, members, memberships, mentors, officers, and so on.
 To get started, follow these steps:
 
 1. Change directory into the root of the repository.
-1. Execute `composer install`.
-1. Copy `.env.example` to `.env`.
+1. Execute `composer install` (this assumes you have installed Composer as `composer` in your `PATH`).
+1. Make a copy of `.env.example` and save it as `.env`.
 1. Init app storage (sessions, cache, etc.) and the database: `./bootstrap/init_storage.sh`
 1. Generate a random app key: `php artisan key:generate`.
 1. Execute `php artisan migrate:refresh --seed`.
