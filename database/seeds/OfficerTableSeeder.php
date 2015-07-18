@@ -16,7 +16,7 @@ class OfficerTableSeeder extends Seeder
         $officer = new Officer();
 
         $officer->member_id = 1;
-        $officer->position = 'President';
+        $officer->title = 'President';
         $officer->term_id = 1;
 
         $officer->save();
