@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
         $this->call(LingoTableSeeder::class);
         $this->call(OfficerTableSeeder::class);
         $this->call(QuoteTableSeeder::class);
+        $this->call(TipTableSeeder::class);
 
         Model::reguard();
     }

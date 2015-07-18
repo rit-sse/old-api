@@ -28,6 +28,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'officers_url' => '/officers',
                 'quotes_url' => '/quotes',
                 'terms_url' => '/terms',
+                'tips_url' => '/tips',
             ]);
         });
 
@@ -78,6 +79,12 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             'terms',
             'TermController',
             ['only' => ['index', 'show']]
+        );
+
+        Route::resource(
+            'tips',
+            'TipController',
+            ['except' => ['create', 'edit']]
         );
     });
 });

@@ -62,6 +62,9 @@ controller is located in `app/Http/Controllers/MembershipController.php`.
 The model for a `Mentor` is location in `app/Mentor.php` and the
 controller is located in `app/Http/Controllers/MentorController.php`.
 
+This route also has a special route established, `/mentors/current_mentor`, that
+returns the instance of the model for which the mentor is on duty.
+
 ### `/officers`
 
 The model for a `Officer` is location in `app/Officer.php` and the controller is
@@ -71,6 +74,14 @@ located in `app/Http/Controllers/OfficerController.php`.
 
 The model for a `Term` is location in `app/Term.php` and the controller is
 located in `app/Http/Controllers/TermController.php`.
+
+This route also has a special route established, `/terms/current_term`, that
+returns the instance of the model for which the year and the season apply.
+
+### `/tips`
+
+The model for a `Tip` is location in `app/Tip.php` and the controller is
+located in `app/Http/Controllers/TipController.php`.
 
 ## Troubleshooting
 
