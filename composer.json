@@ -6,6 +6,10 @@
     "type": "project",
     "require": {
         "php": ">=5.5.9",
+        "ext-mbstring": "*",
+        "ext-pdo_sqlite": "*",
+        "ext-openssl": "*",
+        "ext-tokenizer": "*",
         "laravel/framework": "5.1.*",
         "doctrine/dbal": "~2.5"
     },
