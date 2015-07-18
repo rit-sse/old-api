@@ -11,10 +11,6 @@
 |
 */
 
-Route::get('/', function() {
-    return view('welcome');
-});
-
 Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
     Route::get('/', function() {
         return response()->json([
@@ -38,7 +34,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::resource(
             'events',
             'EventController',
-            ['except' => ['create']]
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(
@@ -55,22 +51,26 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
 
         Route::resource(
             'memberships',
-            'MembershipController'
+            'MembershipController',
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(
             'mentors',
-            'MentorController'
+            'MentorController',
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(
             'officers',
-            'OfficerController'
+            'OfficerController',
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(
             'quotes',
-            'QuoteController'
+            'QuoteController',
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(
