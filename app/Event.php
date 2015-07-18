@@ -9,6 +9,8 @@ class Event extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['url'];
+
     protected $hidden = [
         'created_at',
         'deleted_at',
@@ -19,15 +21,7 @@ class Event extends Model
         'deleted_at',
     ];
 
-    public function jsonSerialize()
-    {
-        $result = parent::jsonSerialize();
-        $result['url'] = $this->url();
-
-        return $result;
-    }
-
-    public function url()
+    public function getUrlAttribute()
     {
         return "/events/" . $this->id;
     }

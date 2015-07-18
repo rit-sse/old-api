@@ -11,21 +11,15 @@ class Term extends Model
 {
     public $timestamps = false;
 
+    protected $appends = ['url'];
+
     protected $fillable = [
         'name',
         'year',
     ];
 
-    public function url()
+    public function getUrlAttribute()
     {
         return '/terms/' . $this->id;
-    }
-
-    public function jsonSerialize()
-    {
-        $result = parent::jsonSerialize();
-        $result['url'] = $this->url();
-
-        return $result;
     }
 }

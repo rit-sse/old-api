@@ -12,6 +12,8 @@ class Quote extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['url'];
+
     protected $hidden = [
         'member_id',
         'created_at',
@@ -32,7 +34,7 @@ class Quote extends Model
         return $this->belongsTo('App\Member');
     }
 
-    public function url()
+    public function getUrlAttribute()
     {
         return '/quotes/' . $this->id;
     }

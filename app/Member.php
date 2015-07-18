@@ -12,6 +12,8 @@ class Member extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['url'];
+
     protected $hidden = [
         'created_at',
         'deleted_at',
@@ -38,14 +40,6 @@ class Member extends Model
         'username',
     ];
 
-    public function jsonSerialize()
-    {
-        $result = parent::jsonSerialize();
-        $result['url'] = $this->url();
-
-        return $result;
-    }
-
     /**
      * Establishes the One To Many relationship with Membership.
      */
@@ -57,7 +51,7 @@ class Member extends Model
     /**
      * IETF url getter.
      */
-    public function url()
+    public function getUrlAttribute()
     {
         return '/members/' . $this->id;
     }   

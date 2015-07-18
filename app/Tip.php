@@ -11,6 +11,8 @@ class Tip extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['url'];
+
     protected $hidden = [
         'created_at',
         'created_by',
@@ -45,7 +47,7 @@ class Tip extends Model
         return $result;
     }
 
-    public function url()
+    public function getUrlAttribute()
     {
         return "/tips/" . $this->id;
     }

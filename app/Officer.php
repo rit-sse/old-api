@@ -12,6 +12,8 @@ class Officer extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['url'];
+
     protected $hidden = [
         'created_at',
         'deleted_at',
@@ -42,7 +44,7 @@ class Officer extends Model
         return $this->belongsTo('App\Term');
     }
 
-    public function url()
+    public function getUrlAttribute()
     {
         return '/officers/' . $this->id;
     }

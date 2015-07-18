@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Mentor extends Model
 {
     use SoftDeletes;
+
+    protected $appends = ['url'];
+
+    public function getUrlAttribute()
+    {
+        return '/mentors/' . $this->id;
+    }
 }

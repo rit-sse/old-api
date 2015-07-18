@@ -12,6 +12,8 @@ class Lingo extends Model
 {
     use SoftDeletes;
 
+    protected $appends = ['url'];
+
     protected $table = 'lingo';
 
     protected $hidden = [
@@ -29,15 +31,7 @@ class Lingo extends Model
         'definition',
     ];
 
-    public function jsonSerialize()
-    {
-        $result = parent::jsonSerialize();
-        $result['url'] = $this->url();
-
-        return $result;
-    }
-
-    public function url()
+    public function getUrlAttribute()
     {
         return '/lingo/' . $this->id;
     }
