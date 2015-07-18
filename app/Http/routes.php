@@ -29,7 +29,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'members_url' => '/members',
                 'memberships_url' => '/memberships',
                 'mentors_url' => '/mentors',
-                'officesr' => '/officers',
+                'officers_url' => '/officers',
                 'quotes_url' => '/quotes',
                 'terms_url' => '/terms',
             ]);
