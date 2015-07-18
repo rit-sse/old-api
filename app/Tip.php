@@ -39,14 +39,6 @@ class Tip extends Model
         return $this->belongsTo('App\Member', 'updated_by');
     }
 
-    public function jsonSerialize()
-    {
-        $result = parent::jsonSerialize();
-        $result['url'] = $this->url();
-
-        return $result;
-    }
-
     public function getUrlAttribute()
     {
         return "/tips/" . $this->id;
