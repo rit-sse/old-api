@@ -17,7 +17,6 @@ class MemberTableSeeder extends Seeder
 
         $member->first_name = 'John';
         $member->last_name = 'Doe';
-        $member->slack_id = 'U023BECGF';
         $member->username = 'jxd1234';
 
         $member->save();

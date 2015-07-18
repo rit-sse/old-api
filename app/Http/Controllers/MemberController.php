@@ -43,7 +43,6 @@ class MemberController extends Controller
 
         $member->first_name = $request->input('first_name');
         $member->last_name = $request->input('last_name');
-        $member->slack_id = $request->input('slack_id', '');
         $member->username = $request->input('username');
 
         $member->save();
@@ -81,7 +80,6 @@ class MemberController extends Controller
 
         $member->first_name = $request->input('first_name', $member->first_name);
         $member->last_name = $request->input('last_name', $member->last_name);
-        $member->slack_id = $request->input('slack_id', $member->slack_id);
 
         $member->save();
 
