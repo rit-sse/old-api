@@ -1,4 +1,7 @@
 <?php
+/**
+ * Defines the Lingo model.
+ */
 
 namespace App;
 

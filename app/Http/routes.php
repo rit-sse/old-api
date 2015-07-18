@@ -44,7 +44,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::resource(
             'lingo',
             'LingoController',
-            ['except' => ['create']]
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(

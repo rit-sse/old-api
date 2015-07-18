@@ -32,7 +32,18 @@ class LingoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'phrase' => 'required|unique:lingo,phrase',
+            'definition' => 'required'
+        ]);
+
+        $lingo = new Lingo();
+
+        $lingo->phrase = $request->input('phrase');
+        $lingo->definition = $request->input('definition');
+
+        $lingo->save();
+        return response()->json($lingo);
     }
 
     /**
@@ -53,17 +64,6 @@ class LingoController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  Request  $request
@@ -72,7 +72,13 @@ class LingoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $lingo = Lingo::findOrFail($id);
+
+        $lingo->definition = $request->input('definition', $this->definition);
+
+        $lingo->save();
+
+        return response()->json($lingo);
     }
 
     /**
@@ -83,6 +89,6 @@ class LingoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Lingo::destroy($id);
     }
 }
