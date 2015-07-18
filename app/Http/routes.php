@@ -52,7 +52,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::resource(
             'memberships',
             'MembershipController',
-            ['except' => ['create', 'edit']]
+            ['except' => ['create', 'edit', 'update']]
         );
 
         Route::resource(

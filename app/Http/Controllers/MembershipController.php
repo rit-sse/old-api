@@ -32,7 +32,17 @@ class MembershipController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'member_id' => 'required',
+            'term_id' => 'required',
+        ]);
+
+        $membership = new Membership();
+
+        $membership->member_id = $request->input('member_id');
+        $membership->term_id = $request->input('term_id');
+
+        return response()->json($membership);
     }
 
     /**
@@ -46,24 +56,10 @@ class MembershipController extends Controller
         try {
             $membership = Membership::findOrFail($id);
 
-            $response = new JsonResponse($membership);
+            return response()->json($membership);
         } catch (ModelNotFoundException $e) {
-            $response = new JsonResponse(['error' => 'not found'], 404);
-        } finally {
-            return $response;
+            return new JsonResponse(['error' => 'not found'], 404);
         }
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  Request  $request
-     * @param  int  $id
-     * @return Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
     }
 
     /**
@@ -74,6 +70,6 @@ class MembershipController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Membership::destroy($id);
     }
 }
