@@ -13,7 +13,7 @@ class TermTableSeeder extends Seeder
      */
     public function run()
     {
-        foreach(range(2015, 50) as $year) {
+        foreach(range(2015, 2030) as $year) {
             DB::table('terms')->insert([
                 'name' => 'Fall',
                 'year' => $year
