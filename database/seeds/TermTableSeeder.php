@@ -21,7 +21,7 @@ class TermTableSeeder extends Seeder
 
             DB::table('terms')->insert([
                 'name' => 'Spring',
-                'year' => $year
+                'year' => $year + 1
             ]);
         }
     }

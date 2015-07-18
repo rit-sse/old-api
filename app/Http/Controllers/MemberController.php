@@ -63,7 +63,7 @@ class MemberController extends Controller
 
             return response()->json($result);
         } catch (ModelNotFoundException $e) {
-            return new JsonReponse(['error' => 'not found'], 404);
+            return new JsonResponse(['error' => 'not found'], 404);
         }
     }
 
