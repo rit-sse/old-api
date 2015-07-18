@@ -12,7 +12,7 @@ class Officer extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = ['position', 'url'];
 
     protected $hidden = [
         'created_at',
@@ -25,7 +25,7 @@ class Officer extends Model
     ];
 
     protected $fillable = [
-        'position',
+        'title',
     ];
 
     /**
@@ -42,6 +42,11 @@ class Officer extends Model
     public function term()
     {
         return $this->belongsTo('App\Term');
+    }
+
+    public function getPositionAttribute()
+    {
+        return str_replace(' ', '_', strtolower($this->title));
     }
 
     public function getUrlAttribute()

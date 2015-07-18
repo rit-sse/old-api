@@ -32,14 +32,14 @@ class OfficerController extends Controller
     {
         $this->validate($request, [
             'member_id' => 'required',
-            'position' => 'required',
+            'title' => 'required',
         ]);
 
         // FIXME: Replace with internal route to /terms/current_term
         $term_id = 1;
 
         $officer = Officer::where(
-            ['position' => $request->input('position'), 'term_id' => $term_id]
+            ['title' => $request->input('title'), 'term_id' => $term_id]
         );
 
         if ($officer) {
@@ -49,7 +49,7 @@ class OfficerController extends Controller
         $officer = new Officer();
 
         $officer->member_id = $request->input('member_id');
-        $officer->position = $request->input('position');
+        $officer->title = $request->input('title');
         $officer->term_id = $term_id;
 
         $officer->save();
