@@ -20,4 +20,12 @@ class Term extends Model
     {
         return '/terms/' . $this->id;
     }
+
+    public function jsonSerialize()
+    {
+        $result = parent::jsonSerialize();
+        $result['url'] = $this->url();
+
+        return $result;
+    }
 }

@@ -54,7 +54,7 @@ class MembershipController extends Controller
     public function show($id)
     {
         try {
-            $membership = Membership::findOrFail($id);
+            $membership = Membership::with('member', 'term')->findOrFail($id);
 
             return response()->json($membership);
         } catch (ModelNotFoundException $e) {
