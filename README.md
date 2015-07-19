@@ -37,6 +37,11 @@ The API root of the application is currently set to `/api/v1`. This route is
 also controlled by `app/Http/routes.php`, the definition of which is controlled
 by the `Route::group` syntax.
 
+### `/agenda`
+
+The model for an `AgendaItem` is location in `app/AgendaItem.php` and the
+controller is located in `app/Http/Controllers/AgendaItem.php`.
+
 ### `/committees`
 
 The model for a `Committee` is location in `app/Committee.php` and the controller

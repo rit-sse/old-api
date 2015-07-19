@@ -21,6 +21,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/', function() {
             return response()->json([
+                'agenda_url' => '/agenda',
                 'committee_url' => '/committees',
                 'lingo_url' => '/lingo',
                 'members_url' => '/members',
@@ -32,6 +33,13 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'tips_url' => '/tips',
             ]);
         });
+
+        Route::delete('/agenda', 'AgendaController@clear');
+        Route::resource(
+            'agenda',
+            'AgendaController',
+            ['except' => ['create', 'edit']]
+        );
 
         Route::resource(
             'committees',
