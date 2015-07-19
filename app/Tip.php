@@ -41,6 +41,6 @@ class Tip extends Model
 
     public function getUrlAttribute()
     {
-        return "/tips/" . $this->id;
+        return '/tips/' . $this->id;
     }
 }
