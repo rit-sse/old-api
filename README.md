@@ -19,7 +19,9 @@ To get started, follow these steps:
 1. Init app storage (sessions, cache, etc.) and the database: `./bootstrap/init_storage.sh`
 1. Generate a random app key: `php artisan key:generate`.
 1. Execute `php artisan migrate:refresh --seed`.
-1. Execute `php -S localhost:8000 server.php`.
+1. Execute `php -S localhost:8000 server.php`.  _Note_: If you are having issues
+   running the [api-client][api-client] locally, run `php -S 0.0.0.0:8000
+   server.php` instead.
 
 This will initialize your development database with seed data and start the
 development server locally on port 8000.
@@ -123,3 +125,5 @@ a few things of which you should be aware. If the `Request` does not consider
 the request to be an AJAX call, it will send a redirect response rather than
 an error. To see the validation messages, add the `X-Requested-With` header with
 a value of `XMLHttpRequest` (yes, case matters!).
+
+[api-client]: https://github.com/rit-sse/api-client
