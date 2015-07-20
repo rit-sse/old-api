@@ -9,11 +9,12 @@ class Committee extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['members_url', 'url'];
+    protected $appends = ['head_url', 'url'];
 
     protected $hidden = [
         'created_at',
         'deleted_at',
+        'head',
         'updated_at',
     ];
 
@@ -35,9 +36,9 @@ class Committee extends Model
         return $this->belongsToMany('App\Member')->withTimestamps();
     }
 
-    public function getMembersUrlAttribute()
+    public function getHeadUrlAttribute()
     {
-        return $this->getUrlAttribute() . '/members';
+        return $this->head->url;
     }
 
     public function getUrlAttribute()

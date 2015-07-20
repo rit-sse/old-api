@@ -49,12 +49,6 @@ controller is located in `app/Http/Controllers/AgendaItem.php`.
 The model for a `Committee` is location in `app/Committee.php` and the controller
 is located in `app/Http/Controllers/CommitteeController.php`.
 
-#### `/committees/{id}/members`
-
-This route is the result of an inverse `Many To Many` relationship (`belongsToMany`),
-and the controller for the relationship is located in
-`app/Http/Controllers/CommitteeMemberController.php`.
-
 ### `/events`
 
 The model for an `Event` is location in `app/Event.php` and the controller is

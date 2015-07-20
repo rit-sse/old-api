@@ -50,12 +50,6 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         );
 
         Route::resource(
-            'committees.members',
-            'CommitteeMemberController',
-            ['only' => ['index', 'store', 'destroy']]
-        );
-
-        Route::resource(
             'events',
             'EventController',
             ['except' => ['create', 'edit']]

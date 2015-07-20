@@ -18,9 +18,25 @@ class MemberController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $members = Member::all();
+        $queryParameters = array_filter(
+            $request->only(['first_name', 'last_name', 'username', 'committee'])
+        );
+
+        if (array_key_exists('committee', $queryParameters)) {
+            $committeeId = $queryParameters['committee'];
+            unset($queryParameters['committee']);
+
+            $members = Member::whereHas(
+                'committees',
+                function ($query) use ($committeeId) {
+                    $query->where('committee_id', $committeeId);
+                }
+            )->where($queryParameters)->get();
+        } else {
+            $members = Member::where($queryParameters)->get();
+        }
 
         return response()->json($members);
     }
