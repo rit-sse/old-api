@@ -24,6 +24,8 @@ class MemberController extends Controller
             $request->only(['first_name', 'last_name', 'username', 'committee'])
         );
 
+        $members = Member::where($queryParameters);
+
         if (array_key_exists('committee', $queryParameters)) {
             $committeeId = $queryParameters['committee'];
             unset($queryParameters['committee']);
@@ -33,12 +35,10 @@ class MemberController extends Controller
                 function ($query) use ($committeeId) {
                     $query->where('committee_id', $committeeId);
                 }
-            )->where($queryParameters)->get();
-        } else {
-            $members = Member::where($queryParameters)->get();
+            );
         }
 
-        return response()->json($members);
+        return response()->json($members->get());
     }
 
     /**
