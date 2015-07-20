@@ -65,6 +65,14 @@ located in `app/Http/Controllers/EventController.php`.
 The model for a `Lingo` instance is location in `app/Member.php` and the
 controller is located in `app/Http/Controllers/LingoController.php`.
 
+### `/links`
+
+The model for a `Link` is location in `app/Mentor.php` and the
+controller is located in `app/Http/Controllers/LinkController.php`.
+
+This route also has a special route established, `{base_url}/go/{go_link}`, that
+returns a redirect response if the short link is found, or an error view if not.
+
 ### `/members`
 
 The model for a `Member` is location in `app/Member.php` and the controller is

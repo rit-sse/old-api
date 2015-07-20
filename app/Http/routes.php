@@ -11,6 +11,8 @@
 |
 */
 
+Route::get('/go/{go_link}', 'LinkController@resolveLink');
+
 Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
     Route::get('/', function() {
         return response()->json([
@@ -62,6 +64,12 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::resource(
             'lingo',
             'LingoController',
+            ['except' => ['create', 'edit']]
+        );
+
+        Route::resource(
+            'links',
+            'LinkController',
             ['except' => ['create', 'edit']]
         );
 
