@@ -24,7 +24,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::get('/', function() {
             return response()->json([
                 'agenda_url' => '/agenda',
-                'committee_url' => '/committees',
+                'groups_url' => '/groups',
                 'lingo_url' => '/lingo',
                 'members_url' => '/members',
                 'memberships_url' => '/memberships',
@@ -44,14 +44,14 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         );
 
         Route::resource(
-            'committees',
-            'CommitteeController',
+            'events',
+            'EventController',
             ['except' => ['create', 'edit']]
         );
 
         Route::resource(
-            'events',
-            'EventController',
+            'groups',
+            'GroupController',
             ['except' => ['create', 'edit']]
         );
 

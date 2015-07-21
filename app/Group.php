@@ -5,7 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Committee extends Model
+class Group extends Model
 {
     use SoftDeletes;
 
@@ -43,6 +43,6 @@ class Committee extends Model
 
     public function getUrlAttribute()
     {
-        return '/committees/' . $this->id;
+        return '/groups/' . $this->id;
     }
 }

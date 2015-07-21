@@ -7,11 +7,11 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-use App\Committee;
+use App\Group;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class CommitteeController extends Controller
+class GroupController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,9 +20,9 @@ class CommitteeController extends Controller
      */
     public function index()
     {
-        $committees = Committee::all();
+        $groups = Group::all();
 
-        return response()->json($committees);
+        return response()->json($groups);
     }
 
     /**
@@ -34,18 +34,18 @@ class CommitteeController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'name' => 'required|unique:committees,name',
+            'name' => 'required|unique:groups,name',
             'head_id' => 'required|exists:officers,id',
         ]);
 
-        $committee = new Committee();
+        $group = new Group();
 
-        $committe->name = $request->input('name');
-        $committe->head_id = $request->input('head_id');
+        $group->name = $request->input('name');
+        $group->head_id = $request->input('head_id');
 
-        $committe->save();
+        $group->save();
 
-        return response()->json($committee);
+        return response()->json($group);
     }
 
     /**
@@ -57,9 +57,9 @@ class CommitteeController extends Controller
     public function show($id)
     {
         try {
-            $committee = Committee::with('head')->findOrFail($id);
+            $group = Group::with('head')->findOrFail($id);
 
-            return response()->json($committee);
+            return response()->json($group);
         } catch (ModelNotFoundException $e) {
             return new JsonResponse(
                 ['error' => 'not found'], Response::HTTP_NOT_FOUND
@@ -77,18 +77,18 @@ class CommitteeController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request, [
-            'name' => 'unique:committees,name',
+            'name' => 'unique:groups,name',
             'head_id' => 'required|exists:officers,id',
         ]);
 
-        $committee = Committee::findOrFail($id);
+        $group = Group::findOrFail($id);
 
-        $committee->name = $request->input('name', $committee->name);
-        $committee->head_id = $request->input('head_id', $committee->head_id);
+        $group->name = $request->input('name', $group->name);
+        $group->head_id = $request->input('head_id', $group->head_id);
 
-        $committee->save();
+        $group->save();
 
-        return response()->json($committee);
+        return response()->json($group);
     }
 
     /**
@@ -99,6 +99,6 @@ class CommitteeController extends Controller
      */
     public function destroy($id)
     {
-        Committee::destroy($id);
+        Group::destroy($id);
     }
 }

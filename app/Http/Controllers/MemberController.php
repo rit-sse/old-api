@@ -21,19 +21,19 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $queryParameters = array_filter(
-            $request->only(['first_name', 'last_name', 'username', 'committee'])
+            $request->only(['first_name', 'last_name', 'username', 'group'])
         );
 
         $members = Member::where($queryParameters);
 
-        if (array_key_exists('committee', $queryParameters)) {
-            $committeeId = $queryParameters['committee'];
-            unset($queryParameters['committee']);
+        if (array_key_exists('group', $queryParameters)) {
+            $groupId = $queryParameters['group'];
+            unset($queryParameters['group']);
 
             $members = Member::whereHas(
-                'committees',
-                function ($query) use ($committeeId) {
-                    $query->where('committee_id', $committeeId);
+                'groups',
+                function ($query) use ($groupId) {
+                    $query->where('group_id', $groupId);
                 }
             );
         }

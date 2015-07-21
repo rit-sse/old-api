@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         $this->call(OfficerTableSeeder::class);
         $this->call(QuoteTableSeeder::class);
         $this->call(TipTableSeeder::class);
-        $this->call(CommitteeTableSeeder::class);
+        $this->call(GroupTableSeeder::class);
         $this->call(AgendaItemTableSeeder::class);
 
         Model::reguard();

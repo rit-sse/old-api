@@ -44,15 +44,15 @@ by the `Route::group` syntax.
 The model for an `AgendaItem` is location in `app/AgendaItem.php` and the
 controller is located in `app/Http/Controllers/AgendaItem.php`.
 
-### `/committees`
-
-The model for a `Committee` is location in `app/Committee.php` and the controller
-is located in `app/Http/Controllers/CommitteeController.php`.
-
 ### `/events`
 
 The model for an `Event` is location in `app/Event.php` and the controller is
 located in `app/Http/Controllers/EventController.php`.
+
+### `/groups`
+
+The model for a `Group` is location in `app/Group.php` and the controller
+is located in `app/Http/Controllers/GroupController.php`.
 
 ### `/lingo`
 

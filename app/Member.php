@@ -41,11 +41,11 @@ class Member extends Model
     ];
 
     /**
-     * Establishes the One To Many relationship with Committee.
+     * Establishes the One To Many relationship with Group.
      */
-    public function committees()
+    public function groups()
     {
-        return $this->belongsToMany('App\Committee')->withTimestamps();
+        return $this->belongsToMany('App\Group')->withTimestamps();
     }
 
     /**
