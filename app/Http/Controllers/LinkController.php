@@ -11,6 +11,10 @@ use App\Http\Controllers\Controller;
 use App\Link;
 use App\Http\Requests;
 
+/**
+ * @Resource("Short Links", uri="/links")
+ * @Versions({"v1"})
+ */
 class LinkController extends Controller
 {
     /**

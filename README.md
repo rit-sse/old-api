@@ -39,69 +39,16 @@ The API root of the application is currently set to `/api/v1`. This route is
 also controlled by `app/Http/routes.php`, the definition of which is controlled
 by the `Route::group` syntax.
 
-### `/agenda`
+## Documentation
 
-The model for an `AgendaItem` is location in `app/AgendaItem.php` and the
-controller is located in `app/Http/Controllers/AgendaItem.php`.
+This project can have its API documentation automatically generated. To do so,
+execute `php artisan api:docs "SSE API" v1` in the root of the repository.
+Optionally, you can add a `--file=` parameter to the command to save the output.
+Otherwise, the generator will dump its output to `stdout`. The output is valid
+[API Blueprint](https://apiblueprint.org/) syntax.
 
-### `/events`
-
-The model for an `Event` is location in `app/Event.php` and the controller is
-located in `app/Http/Controllers/EventController.php`.
-
-### `/groups`
-
-The model for a `Group` is location in `app/Group.php` and the controller
-is located in `app/Http/Controllers/GroupController.php`.
-
-### `/lingo`
-
-The model for a `Lingo` instance is location in `app/Member.php` and the
-controller is located in `app/Http/Controllers/LingoController.php`.
-
-### `/links`
-
-The model for a `Link` is location in `app/Mentor.php` and the
-controller is located in `app/Http/Controllers/LinkController.php`.
-
-This route also has a special route established, `{base_url}/go/{go_link}`, that
-returns a redirect response if the short link is found, or an error view if not.
-
-### `/members`
-
-The model for a `Member` is location in `app/Member.php` and the controller is
-located in `app/Http/Controllers/MemberController.php`.
-
-### `/memberships`
-
-The model for a `Membership` is location in `app/Membership.php` and the
-controller is located in `app/Http/Controllers/MembershipController.php`.
-
-### `/mentors`
-
-The model for a `Mentor` is location in `app/Mentor.php` and the
-controller is located in `app/Http/Controllers/MentorController.php`.
-
-This route also has a special route established, `/mentors/current_mentor`, that
-returns the instance of the model for which the mentor is on duty.
-
-### `/officers`
-
-The model for a `Officer` is location in `app/Officer.php` and the controller is
-located in `app/Http/Controllers/OfficerController.php`.
-
-### `/terms`
-
-The model for a `Term` is location in `app/Term.php` and the controller is
-located in `app/Http/Controllers/TermController.php`.
-
-This route also has a special route established, `/terms/current_term`, that
-returns the instance of the model for which the year and the season apply.
-
-### `/tips`
-
-The model for a `Tip` is location in `app/Tip.php` and the controller is
-located in `app/Http/Controllers/TipController.php`.
+The documentation for annotation required by the generator can be found at
+[dingo/api-docs](https://github.com/dingo/api-docs/blob/master/API%20Blueprint%20Documentation.md).
 
 ## Troubleshooting
 

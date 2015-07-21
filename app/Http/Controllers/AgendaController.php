@@ -11,11 +11,19 @@ use App\AgendaItem;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+/**
+ * Controls the collection of agenda items.
+ *
+ * @Resource("Agenda Items", uri="/agenda")
+ * @Versions({"v1"})
+ */
 class AgendaController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get the collection of agenda items.
      *
+     * @Get("/")
+     * @Response(200, body={{"id": 1, "content": "foo", "created_by": "1", "url": "/agenda/1"}})
      * @return Response
      */
     public function index()
@@ -26,8 +34,10 @@ class AgendaController extends Controller
     }
 
     /**
-     * Delete all resources.
+     * Delete all current agenda items.
      *
+     * @Delete("/")
+     * @Response(200)
      * @return Response
      */
     public function clear()
@@ -36,8 +46,14 @@ class AgendaController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created agenda item.
      *
+     * @Post("/")
+     * @Transaction(
+     *     @Request({"content": "foo"}),
+     *     @Response(200, body={"id": 2, "content": "foo", "created_by": "1", "url": "/agenda/2"}),
+     *     @Response(422, body={"content": {"The content has already been taken."}})
+     * )
      * @param  Request  $request
      * @return Response
      */
@@ -58,8 +74,13 @@ class AgendaController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Get the specified agenda item.
      *
+     * @Get("/{id}")
+     * @Transaction(
+     *     @Response(200, body={"id": 1, "content": "foo", "created_by": "1", "url": "/agenda/2"}),
+     *     @Response(404, body={"error": "not found"})
+     * )
      * @param  int  $id
      * @return Response
      */
@@ -77,8 +98,14 @@ class AgendaController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified agenda item in storage.
      *
+     * @Put("/{id}")
+     * @Transaction(
+     *     @Request({"content": "bar"}),
+     *     @Response(200, body={"id": 1, "content": "bar", "created_by": "1", "url": "/agenda/2"}),
+     *     @Response(404, body={"error": "not found"})
+     * )
      * @param  Request  $request
      * @param  int  $id
      * @return Response
@@ -100,8 +127,10 @@ class AgendaController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified agenda item from storage.
      *
+     * @Delete("/{id}")
+     * @Response(200)
      * @param  int  $id
      * @return Response
      */

@@ -11,6 +11,9 @@ use App\Event;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+/**
+ * @Resource("Events", uri="/events")
+ */
 class EventController extends Controller
 {
     /**

@@ -11,6 +11,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Membership;
 
+/**
+ * @Resource("Memberships", uri="/memberships")
+ */
 class MembershipController extends Controller
 {
     /**

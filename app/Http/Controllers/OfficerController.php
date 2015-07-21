@@ -9,6 +9,9 @@ use Illuminate\Http\Response;
 
 use App\Officer;
 
+/**
+ * @Resource("Officers", uri="/officers")
+ */
 class OfficerController extends Controller
 {
     /**

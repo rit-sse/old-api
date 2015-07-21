@@ -12,6 +12,9 @@ use App\Http\Controllers\Controller;
 
 use App\Tip;
 
+/**
+ * @Resource("Tips", uri="/tips")
+ */
 class TipController extends Controller
 {
     /**

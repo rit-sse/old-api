@@ -11,6 +11,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Term;
 
+/**
+ * @Resource("Terms", uri="/terms")
+ */
 class TermController extends Controller
 {
     public function current_term()

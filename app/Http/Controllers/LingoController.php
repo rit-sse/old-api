@@ -11,6 +11,9 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Lingo;
 
+/**
+ * @Resource("Lingo", uri="/lingo")
+ */
 class LingoController extends Controller
 {
     /**

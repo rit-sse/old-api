@@ -11,6 +11,9 @@ use App\Group;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
+/**
+ * @Resource("Groups", uri="/groups")
+ */
 class GroupController extends Controller
 {
     /**
