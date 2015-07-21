@@ -1,7 +1,5 @@
 <?php
 
-use \DB;
-
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
@@ -28,10 +26,10 @@ class RenameCommitteesGroups extends Migration
             $table->timestamps();
         });
 
-        $committee_members = DB::table('committee_member')->get();
+        $committee_members = \DB::table('committee_member')->get();
 
         foreach($committee_members as $committee_member) {
-            DB::table('group_member')->insert([
+            \DB::table('group_member')->insert([
                 'group_id' => $committee_member->committee_id,
                 'member_id' => $committee_member->member_id,
                 'created_at' => $committee_member->created_at,
@@ -63,10 +61,10 @@ class RenameCommitteesGroups extends Migration
             $table->timestamps();
         });
 
-        $group_members = DB::table('group_member')->get();
+        $group_members = \DB::table('group_member')->get();
 
         foreach($group_members as $group_member) {
-            DB::table('group_member')->insert([
+            \DB::table('group_member')->insert([
                 'committee_id' => $group_member->committee_id,
                 'member_id' => $group_member->member_id,
                 'created_at' => $group_member->created_at,
