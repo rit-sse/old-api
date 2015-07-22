@@ -10,30 +10,67 @@ use Illuminate\Http\Response;
 use App\Officer;
 
 /**
+ * Controls the collection of officers.
+ *
  * @Resource("Officers", uri="/officers")
+ * @Versions({"v1"})
  */
 class OfficerController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Get the collection of officers.
      *
+     * @Get("/{?member,term,title}")
+     * @Parameters(
+     *     @Parameter("member", description="Member id of an officer.", default=""),
+     *     @Parameter("term", description="Term of officer(s).", default=""),
+     *     @Parameter("title", description="Title of an officer.", default="")
+     * )
+     * @Response(200, body={{"id": 1, "member_id": 1, "term_id": 1,
+     *                      "title": "President", "position": "president",
+     *                      "email": "president@sse.se.rit.edu", "url": "/officers/1"}}),
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $officers = Officer::all();
+        $queryParameters = array_filter(
+            $request->only(['member', 'term', 'title'])
+        );
 
-        return response()->json($officers);
+        $officers = Officer::query();
+
+        if (array_key_exists('member', $queryParameters)) {
+            $officers->where('member_id', $queryParameters['member']);
+        }
+
+        if (array_key_exists('term', $queryParameters)) {
+            $officers->where('term_id', $queryParameters['term']);
+        }
+
+        if (array_key_exists('title', $queryParameters)) {
+            $officers->where('title', 'like', $queryParameters['title']);
+        }
+
+        return response()->json($officers->get());
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created officer in storage.
      *
+     * @Post("/")
+     * @Transaction(
+     *     @Request({"member_id": 1, "title": "President"}),
+     *     @Response(200, body={"id": 1, "member_id": 1, "term_id": 1,
+     *                          "title": "President", "position": "president",
+     *                          "email": "president@sse.se.rit.edu", "url": "/officers/1"}),
+     *     @Response(422, body={"member_id": {"The member id field is required."}})
+     * )
      * @param  Request  $request
      * @return Response
      */
     public function store(Request $request)
     {
+        // FIXME: Validate unique title for current term
         $this->validate($request, [
             'member_id' => 'required',
             'title' => 'required',
@@ -62,8 +99,15 @@ class OfficerController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified officer.
      *
+     * @Get("/{id}")
+     * @Transaction(
+     *     @Response(200, body={"id": 1, "member_id": 1, "term_id": 1,
+     *                          "title": "President", "position": "president",
+     *                          "email": "president@sse.se.rit.edu", "url": "/officers/1"}),
+     *     @Response(404, body={"error": "not found"})
+     * )
      * @param  int  $id
      * @return Response
      */
@@ -81,8 +125,10 @@ class OfficerController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified officer from storage.
      *
+     * @Delete("/{id}")
+     * @Response(200)
      * @param  int  $id
      * @return Response
      */

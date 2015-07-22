@@ -12,7 +12,11 @@ class Officer extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['position', 'url'];
+    protected $appends = [
+        'email',
+        'position',
+        'url',
+    ];
 
     protected $hidden = [
         'created_at',
@@ -42,6 +46,11 @@ class Officer extends Model
     public function term()
     {
         return $this->belongsTo('App\Term');
+    }
+
+    public function getEmailAttribute()
+    {
+        return $this->position . '@' . config('app.email_domain');
     }
 
     public function getPositionAttribute()
