@@ -36,8 +36,8 @@ class LingoController extends Controller
 
         $lingo = Lingo::query();
 
-        foreach ($queryParameters as $key => $value) {
-            $lingo = $lingo->where($key, 'like', '%' . $value . '%');
+        if (array_key_exists('phrase', $queryParameters)) {
+            $lingo = $lingo->where(['phrase' => $queryParameters['phrase']]);
         }
 
         return response()->json($lingo->get());
