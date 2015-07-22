@@ -27,13 +27,13 @@ class LingoController extends Controller
             $request->only(['phrase'])
         );
 
-        $lingo = Lingo::all();
+        $lingo = Lingo::query();
 
-        foreach($queryParameters as $key => $value) {
-            $lingo->where($key, 'like', $value);
+        foreach ($queryParameters as $key => $value) {
+            $lingo = $lingo->where($key, 'like', '%' . $value . '%');
         }
 
-        return response()->json($lingo->all());
+        return response()->json($lingo->get());
     }
 
     /**

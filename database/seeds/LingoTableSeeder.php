@@ -21,5 +21,14 @@ class LingoTableSeeder extends Seeder
             'here at RIT.';
 
         $lingo->save();
+
+        $lingo = new Lingo();
+
+        $lingo->phrase = '361';
+        $lingo->definition = '361 is the course number for the old Introduction ' .
+            'to Software Engineering, the SE course required by many programs ' .
+            'RIT back in the glory days of the quarter system.';
+
+        $lingo->save();
     }
 }
