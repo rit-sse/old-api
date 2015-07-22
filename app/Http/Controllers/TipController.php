@@ -13,7 +13,10 @@ use App\Http\Controllers\Controller;
 use App\Tip;
 
 /**
+ * Tip resource representation.
+ *
  * @Resource("Tips", uri="/tips")
+ * @Versions({"v1"})
  */
 class TipController extends Controller
 {

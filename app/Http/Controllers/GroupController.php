@@ -12,13 +12,22 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
 /**
+ * Group group representation.
+ *
  * @Resource("Groups", uri="/groups")
+ * @Versions({"v1"})
  */
 class GroupController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show all groups.
      *
+     * Get a JSON representation of all the registered groups.
+     *
+     * @Get("/")
+     * @Response(200, body={{"id": 1, "name": "Website Committee",
+     *                       "head_id": 1, "head_url": "/officers/1",
+     *                       "url": "/groups/1"}})
      * @return Response
      */
     public function index()
@@ -29,8 +38,17 @@ class GroupController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created group in storage.
      *
+     * @Post("/")
+     * @Transaction(
+     *     @Request({"name": "Heist Organizers", "head_id": 1}),
+     *     @Response(200, body={{"id": 2, "name": "Heist Organizers",
+     *                           "head_id": 1, "head_url": "/officers/1",
+     *                           "url": "/groups/2"}}),
+     *     @Response(422, body={"name": {"The name is already taken."},
+     *                          "head_id": {"The head id does not exist."}})
+     * )
      * @param  Request  $request
      * @return Response
      */
@@ -52,8 +70,15 @@ class GroupController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified group.
      *
+     * @Get("/{id}")
+     * @Transaction(
+     *     @Response(200, body={{"id": 1, "name": "Website Committee",
+     *                           "head_id": 1, "head_url": "/officers/1",
+     *                           "url": "/groups/1"}}),
+     *     @Response(404, body={"error": "not found"})
+     * )
      * @param  int  $id
      * @return Response
      */
@@ -71,8 +96,17 @@ class GroupController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update the specified group in storage.
      *
+     * @Put("/{id}")
+     * @Transaction(
+     *     @Request({"name": "Heist Committee", "head_id": 2}),
+     *     @Response(200, body={{"id": 1, "name": "Website Committee",
+     *                           "head_id": 1, "head_url": "/officers/1",
+     *                           "url": "/groups/1"}}),
+     *     @Response(422, body={"name": {"That name is already taken."},
+     *                          "head_id": {"The head id does not exist."}})
+     * )
      * @param  Request  $request
      * @param  int  $id
      * @return Response
@@ -95,8 +129,10 @@ class GroupController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified group from storage.
      *
+     * @Delete("/{id}")
+     * @Response(200)
      * @param  int  $id
      * @return Response
      */

@@ -12,6 +12,8 @@ use App\Link;
 use App\Http\Requests;
 
 /**
+ * Link resource representation.
+ *
  * @Resource("Short Links", uri="/links")
  * @Versions({"v1"})
  */
@@ -20,6 +22,7 @@ class LinkController extends Controller
     /**
      * Resolve a given go link into a redirect response.
      *
+     * @Get("/go/{go_link}")
      * @return response
      */
     public function resolveLink($goLink)
@@ -38,6 +41,7 @@ class LinkController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @Get("/")
      * @return Response
      */
     public function index()
@@ -50,6 +54,7 @@ class LinkController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @Post("/")
      * @param  Request  $request
      * @return Response
      */
@@ -74,6 +79,7 @@ class LinkController extends Controller
     /**
      * Display the specified resource.
      *
+     * @Get("/{id}")
      * @param  int  $id
      * @return Response
      */
@@ -93,6 +99,7 @@ class LinkController extends Controller
     /**
      * Update the specified resource in storage.
      *
+     * @Put("/{id}")
      * @param  Request  $request
      * @param  int  $id
      * @return Response
@@ -123,6 +130,7 @@ class LinkController extends Controller
     /**
      * Remove the specified resource from storage.
      *
+     * @Delete("/{id}")
      * @param  int  $id
      * @return Response
      */

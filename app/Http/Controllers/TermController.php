@@ -12,10 +12,19 @@ use App\Http\Controllers\Controller;
 use App\Term;
 
 /**
+ * Term resource representation.
+ *
  * @Resource("Terms", uri="/terms")
+ * @Versions({"v1"})
  */
 class TermController extends Controller
 {
+    /**
+     * Get the current term according to the date.
+     *
+     * @Get("/current_term")
+     * @Response(200, body={"id": 1, "name": "Fall", "year": "2015"})
+     */
     public function current_term()
     {
         $timezone = new \DateTimeZone('America/New_York');
@@ -31,8 +40,11 @@ class TermController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Get a listing of the term.
      *
+     * @Get("/")
+     * @Response(200, body={{"id": 1, "name": "Fall", "year": "2015"},
+     *                      {"id": 2, "name": "Fall", "year": "2015"}})
      * @return Response
      */
     public function index()
@@ -43,8 +55,13 @@ class TermController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Display the specified term.
      *
+     * @Get("/{id}")
+     * @Transaction(
+     *     @Response(200, body={"id": 1, "name": "Fall", "year": "2015"}),
+     *     @Response(404, body={"error": "not found"})
+     * )
      * @param  int  $id
      * @return Response
      */
