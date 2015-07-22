@@ -21,11 +21,19 @@ class LingoController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
+        $queryParameters = array_filter(
+            $request->only(['phrase'])
+        );
+
         $lingo = Lingo::all();
 
-        return response()->json($lingo);
+        foreach($queryParameters as $key => $value) {
+            $lingo->where($key, 'like', $value);
+        }
+
+        return response()->json($lingo->all());
     }
 
     /**
