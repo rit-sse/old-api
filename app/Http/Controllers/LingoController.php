@@ -49,7 +49,7 @@ class LingoController extends Controller
      * @Post("/")
      * @Transaction(
      *     @Request({"phrase": "361", "definition": "..."}),
-     *     @Response(200, body={"id": 2, "phrase": "361", "definition": "...", "url": "/lingo/2"}),
+     *     @Response(201, body={"id": 2, "phrase": "361", "definition": "...", "url": "/lingo/2"}),
      *     @Response(422, body={"phrase": {"The phrase has already been taken."}})
      * )
      * @param  Request  $request
@@ -68,7 +68,8 @@ class LingoController extends Controller
         $lingo->definition = $request->input('definition');
 
         $lingo->save();
-        return response()->json($lingo);
+
+        return new JsonResponse($lingo, Response::HTTP_CREATED);
     }
 
     /**
@@ -123,12 +124,14 @@ class LingoController extends Controller
      * Remove the specified lingo from storage.
      *
      * @Delete("/{id}")
-     * @Response(200)
+     * @Response(204)
      * @param  int  $id
      * @return Response
      */
     public function destroy($id)
     {
         Lingo::destroy($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

@@ -43,7 +43,7 @@ class GroupController extends Controller
      * @Post("/")
      * @Transaction(
      *     @Request({"name": "Heist Organizers", "head_id": 1}),
-     *     @Response(200, body={{"id": 2, "name": "Heist Organizers",
+     *     @Response(201, body={{"id": 2, "name": "Heist Organizers",
      *                           "head_id": 1, "head_url": "/officers/1",
      *                           "url": "/groups/2"}}),
      *     @Response(422, body={"name": {"The name is already taken."},
@@ -66,7 +66,7 @@ class GroupController extends Controller
 
         $group->save();
 
-        return response()->json($group);
+        return new JsonResponse($group, Response::HTTP_CREATED);
     }
 
     /**
@@ -132,12 +132,14 @@ class GroupController extends Controller
      * Remove the specified group from storage.
      *
      * @Delete("/{id}")
-     * @Response(200)
+     * @Response(204)
      * @param  int  $id
      * @return Response
      */
     public function destroy($id)
     {
         Group::destroy($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

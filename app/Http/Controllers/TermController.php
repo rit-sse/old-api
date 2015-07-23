@@ -20,7 +20,11 @@ use App\Term;
 class TermController extends Controller
 {
     /**
-     * Get the current term according to the date.
+     * Get the current term.
+     *
+     * This method returns the instance that represents the current term by
+     * calculating the season based on the current date. It then uses that
+     * calculation to find the stored instance.
      *
      * @Get("/current_term")
      * @Response(200, body={"id": 1, "name": "Fall", "year": "2015"})

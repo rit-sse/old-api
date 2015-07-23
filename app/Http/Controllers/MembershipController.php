@@ -31,6 +31,7 @@ class MembershipController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @Response(201)
      * @param  Request  $request
      * @return Response
      */
@@ -46,7 +47,9 @@ class MembershipController extends Controller
         $membership->member_id = $request->input('member_id');
         $membership->term_id = $request->input('term_id');
 
-        return response()->json($membership);
+        $membership->save();
+
+        return new JsonResponse($membership, Response::HTTP_CREATED);
     }
 
     /**
@@ -77,5 +80,7 @@ class MembershipController extends Controller
     public function destroy($id)
     {
         Membership::destroy($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

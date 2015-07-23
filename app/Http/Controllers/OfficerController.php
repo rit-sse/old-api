@@ -60,7 +60,7 @@ class OfficerController extends Controller
      * @Post("/")
      * @Transaction(
      *     @Request({"member_id": 1, "title": "President"}),
-     *     @Response(200, body={"id": 1, "member_id": 1, "term_id": 1,
+     *     @Response(201, body={"id": 1, "member_id": 1, "term_id": 1,
      *                          "title": "President", "position": "president",
      *                          "email": "president@sse.se.rit.edu", "url": "/officers/1"}),
      *     @Response(422, body={"member_id": {"The member id field is required."}})
@@ -95,7 +95,7 @@ class OfficerController extends Controller
 
         $officer->save();
 
-        return response()->json($officer);
+        return new JsonResponse($officer, Response::HTTP_CREATED);
     }
 
     /**
@@ -135,5 +135,7 @@ class OfficerController extends Controller
     public function destroy($id)
     {
         Officer::destroy($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

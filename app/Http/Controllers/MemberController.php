@@ -47,6 +47,7 @@ class MemberController extends Controller
     /**
      * Store a newly created resource in storage.
      *
+     * @Response(201)
      * @param  Request  $request
      * @return Response
      */
@@ -66,7 +67,7 @@ class MemberController extends Controller
 
         $member->save();
 
-        return response()->json($member);
+        return new JsonResponse($member, Response::HTTP_CREATED);
     }
 
     /**
@@ -116,5 +117,7 @@ class MemberController extends Controller
     public function destroy($id)
     {
         Member::destroy($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }

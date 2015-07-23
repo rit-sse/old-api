@@ -23,7 +23,8 @@ class AgendaController extends Controller
      * Get the collection of agenda items.
      *
      * @Get("/")
-     * @Response(200, body={{"id": 1, "content": "foo", "created_by": "1", "url": "/agenda/1"}})
+     * @Response(200, body={{"id": 1, "content": "foo", "created_by": "1",
+     *                       "url": "/agenda/1"}})
      * @return Response
      */
     public function index()
@@ -37,12 +38,14 @@ class AgendaController extends Controller
      * Delete all current agenda items.
      *
      * @Delete("/")
-     * @Response(200)
+     * @Response(204)
      * @return Response
      */
     public function clear()
     {
         AgendaItem::where('id', '>', 0)->delete();
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 
     /**
@@ -51,7 +54,8 @@ class AgendaController extends Controller
      * @Post("/")
      * @Transaction(
      *     @Request({"content": "foo"}),
-     *     @Response(200, body={"id": 2, "content": "foo", "created_by": "1", "url": "/agenda/2"}),
+     *     @Response(201, body={"id": 2, "content": "foo", "created_by": "1",
+     *                          "url": "/agenda/2"}),
      *     @Response(422, body={"content": {"The content has already been taken."}})
      * )
      * @param  Request  $request
@@ -70,7 +74,7 @@ class AgendaController extends Controller
 
         $agendaItem->save();
 
-        return response()->json($agendaItem);
+        return new JsonResponse($agendaItem, Response::HTTP_CREATED);
     }
 
     /**
@@ -78,7 +82,8 @@ class AgendaController extends Controller
      *
      * @Get("/{id}")
      * @Transaction(
-     *     @Response(200, body={"id": 1, "content": "foo", "created_by": "1", "url": "/agenda/2"}),
+     *     @Response(200, body={"id": 1, "content": "foo", "edited_by_url": "",
+     *                          "author_url": "/members/1", "url": "/agenda/2"}),
      *     @Response(404, body={"error": "not found"})
      * )
      * @param  int  $id
@@ -130,12 +135,14 @@ class AgendaController extends Controller
      * Remove the specified agenda item from storage.
      *
      * @Delete("/{id}")
-     * @Response(200)
+     * @Response(204)
      * @param  int  $id
      * @return Response
      */
     public function destroy($id)
     {
         AgendaItem::destroy($id);
+
+        return response('', Response::HTTP_NO_CONTENT);
     }
 }
