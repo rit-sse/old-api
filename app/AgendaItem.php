@@ -10,6 +10,8 @@ class AgendaItem extends Model
     use SoftDeletes;
 
     protected $appends = [
+        'author_url',
+        'edited_by_url',
         'url',
     ];
 
@@ -22,8 +24,11 @@ class AgendaItem extends Model
     ];
 
     protected $hidden = [
+        'author',
         'created_at',
+        'created_by',
         'deleted_at',
+        'edited_by',
         'updated_at',
         'updated_by',
     ];
@@ -36,6 +41,16 @@ class AgendaItem extends Model
     public function edited_by()
     {
         return $this->belongsTo('App\Member', 'updated_by');
+    }
+
+    public function getAuthorUrlAttribute()
+    {
+        return $this->author->url;
+    }
+
+    public function getEditedByUrlAttribute()
+    {
+        return $this->edited_by ? $this->edited_by->url : null;
     }
 
     public function getUrlAttribute()

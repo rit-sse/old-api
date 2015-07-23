@@ -9,12 +9,18 @@ class Group extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['head_url', 'url'];
+    protected $appends = [
+        'head_url',
+        'members_url',
+        'url',
+    ];
 
     protected $hidden = [
         'created_at',
         'deleted_at',
         'head',
+        'head_id',
+        'members',
         'updated_at',
     ];
 
@@ -39,6 +45,11 @@ class Group extends Model
     public function getHeadUrlAttribute()
     {
         return $this->head->url;
+    }
+
+    public function getMembersUrlAttribute()
+    {
+        return '/members?group=' . $this->id;
     }
 
     public function getUrlAttribute()

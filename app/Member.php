@@ -12,11 +12,17 @@ class Member extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'groups_url',
+        'memberships_url',
+        'url',
+    ];
 
     protected $hidden = [
         'created_at',
         'deleted_at',
+        'groups',
+        'memberships',
         'updated_at',
     ];
 
@@ -55,6 +61,22 @@ class Member extends Model
     {
         return $this->hasMany('App\Membership');
     }
+
+    /**
+     * IETF url getter.
+     */
+    public function getGroupsUrlAttribute()
+    {
+        return '/groups?member=' . $this->id;
+    }   
+
+    /**
+     * IETF url getter.
+     */
+    public function getMembershipsUrlAttribute()
+    {
+        return '/memberships?member=' . $this->id;
+    }   
 
     /**
      * IETF url getter.
