@@ -30,11 +30,19 @@ class GroupController extends Controller
      *                       "url": "/groups/1"}})
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $groups = Group::all();
+        $queryParameters = array_filter(
+            $request->only(['name'])
+        );
 
-        return response()->json($groups);
+        $groups = Group::query();
+
+        if (array_key_exists('name', $queryParameters)) {
+            $groups->where('name', 'like', $queryParameters['name']);
+        }
+
+        return response()->json($groups->paginate());
     }
 
     /**
