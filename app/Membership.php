@@ -25,6 +25,10 @@ class Membership extends Model
         'deleted_at',
     ];
 
+    protected $fillable = [
+        'reason',
+    ];
+
     /**
      * Establishes the One To One relationship with Member.
      */

@@ -9,7 +9,9 @@ use Illuminate\Http\Response;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Member;
 use App\Membership;
+use App\Term;
 
 /**
  * @Resource("Memberships", uri="/memberships")
@@ -21,11 +23,23 @@ class MembershipController extends Controller
      *
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $memberships = Membership::all();
+        $queryParameters = array_filter(
+            $request->only(['member', 'term'])
+        );
 
-        return response()->json($memberships);
+        $memberships = Membership::query();
+
+        if (array_key_exists('member', $queryParameters)) {
+            $memberships->where('member_id', $queryParameters['member']);
+        }
+
+        if (array_key_exists('term', $queryParameters)) {
+            $memberships->where('term_id', $queryParameters['term']);
+        }
+
+        return response()->json($memberships->get());
     }
 
     /**
@@ -38,16 +52,19 @@ class MembershipController extends Controller
     public function store(Request $request)
     {
         $this->validate($request, [
-            'member_id' => 'required',
-            'term_id' => 'required',
+            'member_id' => 'required|exists:members,id',
+            'reason' => 'required',
+            'term_id' => 'required|exists:terms,id',
         ]);
 
+        $member = Member::findOrFail($request->input('member_id'));
+        $term = Term::findOrFail($request->input('term_id'));
         $membership = new Membership();
 
-        $membership->member_id = $request->input('member_id');
+        $membership->reason = $request->input('reason');
         $membership->term_id = $request->input('term_id');
 
-        $membership->save();
+        $member->memberships()->save($membership);
 
         return new JsonResponse($membership, Response::HTTP_CREATED);
     }

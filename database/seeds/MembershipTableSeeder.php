@@ -16,6 +16,7 @@ class MembershipTableSeeder extends Seeder
         $membership = new Membership();
 
         $membership->member_id = 1;
+        $membership->reason = 'Bought SSE Gold';
         $membership->term_id = 1;
 
         $membership->save();
