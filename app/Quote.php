@@ -12,7 +12,9 @@ class Quote extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'url'
+    ];
 
     protected $hidden = [
         'member_id',
@@ -26,12 +28,19 @@ class Quote extends Model
     ];
 
     protected $fillable = [
-        'content',
+        'approved',
+        'body',
+        'description',
     ];
 
     public function member()
     {
         return $this->belongsTo('App\Member');
+    }
+
+    public function tags()
+    {
+        return $this->hasMany('App\Tag');
     }
 
     public function getUrlAttribute()
