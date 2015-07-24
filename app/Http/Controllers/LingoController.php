@@ -40,7 +40,7 @@ class LingoController extends Controller
             $lingo = $lingo->where(['phrase' => $queryParameters['phrase']]);
         }
 
-        return response()->json($lingo->get());
+        return response()->json($lingo->paginate());
     }
 
     /**

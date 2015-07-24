@@ -34,9 +34,9 @@ class TipController extends Controller
      */
     public function index()
     {
-        $tips = Tip::all();
+        $tips = Tip::query();
 
-        return response()->json($tips);
+        return response()->json($tips->paginate());
     }
 
     /**

@@ -46,9 +46,9 @@ class LinkController extends Controller
      */
     public function index()
     {
-        $links = Link::all();
+        $links = Link::query();
 
-        return response()->json($links);
+        return response()->json($links->paginate());
     }
 
     /**

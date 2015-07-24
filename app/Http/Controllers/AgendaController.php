@@ -29,9 +29,9 @@ class AgendaController extends Controller
      */
     public function index()
     {
-        $items = AgendaItem::all();
+        $items = AgendaItem::query();
 
-        return response()->json($items);
+        return response()->json($items->paginate());
     }
 
     /**

@@ -27,7 +27,7 @@ class MemberController extends Controller
             $request->only(['first_name', 'last_name', 'username', 'group'])
         );
 
-        $members = Member::where($queryParameters);
+        $members = Member::query();
 
         if (array_key_exists('group', $queryParameters)) {
             $groupId = $queryParameters['group'];
@@ -41,7 +41,9 @@ class MemberController extends Controller
             );
         }
 
-        return response()->json($members->get());
+        $members->where($queryParameters);
+
+        return response()->json($members->paginate());
     }
 
     /**
