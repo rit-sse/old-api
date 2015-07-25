@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Providers;
 
 use Laravel\Socialite\Two\GoogleProvider;
 

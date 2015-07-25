@@ -48,5 +48,5 @@ class Membership extends Model
     public function getUrlAttribute()
     {
         return '/memberships/' . $this->id;
-    }   
+    }
 }

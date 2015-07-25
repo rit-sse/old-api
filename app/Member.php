@@ -62,5 +62,5 @@ class Member extends Model
     public function getUrlAttribute()
     {
         return '/members/' . $this->id;
-    }   
+    }
 }
