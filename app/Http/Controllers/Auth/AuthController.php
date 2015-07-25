@@ -8,10 +8,12 @@ use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
 
 use App\Member;
+use JWTAuth;
 
 class AuthController extends Controller
 {
     private $pattern = '/(.*)@(g.)?rit.edu/';
+
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -32,6 +34,12 @@ class AuthController extends Controller
      */
     public function handleProviderCallback(Request $request)
     {
+        if (env('APP_ENV', 'local')) {
+            $member = Member::findOrFail(1);
+            $token = JWTAuth::fromUser($member);
+            return response()->json($token);
+        }
+
         $provider = new GoogleRitProvider(
             $request,
             config('services.google.client_id'),
@@ -42,7 +50,8 @@ class AuthController extends Controller
         $user = $provider->user();
         if (array_get($user->user, 'domain', '') != 'g.rit.edu') {
             return new JsonResponse(
-                ['error' => 'Domain user not authorized.'], Response::HTTP_FORBIDDEN
+                ['error' => 'Domain user not authorized.'],
+                Response::HTTP_FORBIDDEN
             );
         }
 
@@ -54,7 +63,8 @@ class AuthController extends Controller
                 'username' => $username
             ]);
 
-            return response()->json($member);
+            $token = JWTAuth::fromUser($member);
+            return response()->json($token);
         } else {
             abort(500);
         }
