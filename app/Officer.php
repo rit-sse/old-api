@@ -14,13 +14,19 @@ class Officer extends Model
 
     protected $appends = [
         'email',
+        'member_url',
         'position',
+        'term_url',
         'url',
     ];
 
     protected $hidden = [
         'created_at',
         'deleted_at',
+        'member',
+        'member_id',
+        'term',
+        'term_id',
         'updated_at',
     ];
 
@@ -56,6 +62,16 @@ class Officer extends Model
     public function getPositionAttribute()
     {
         return str_replace(' ', '_', strtolower($this->title));
+    }
+
+    public function getMemberUrlAttribute()
+    {
+        return $this->member->url;
+    }
+
+    public function getTermUrlAttribute()
+    {
+        return $this->term->url;
     }
 
     public function getUrlAttribute()

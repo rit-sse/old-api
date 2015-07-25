@@ -9,6 +9,11 @@ class Link extends Model
 {
     use SoftDeletes;
 
+    protected $appends = [
+        'creator_url',
+        'url',
+    ];
+
     protected $dates = [
         'deleted_at',
     ];
@@ -20,6 +25,7 @@ class Link extends Model
 
     protected $hidden = [
         'created_at',
+        'creator',
         'deleted_at',
         'updated_at',
     ];
@@ -27,6 +33,11 @@ class Link extends Model
     public function creator()
     {
         return $this->belongsTo('App\Member');
+    }
+
+    public function getCreatorUrlAttribute()
+    {
+        return $this->creator->url;
     }
 
     public function getUrlAttribute()

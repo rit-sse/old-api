@@ -12,7 +12,9 @@ class Lingo extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'url',
+    ];
 
     protected $table = 'lingo';
 

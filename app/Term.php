@@ -11,7 +11,9 @@ class Term extends Model
 {
     public $timestamps = false;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'url'
+    ];
 
     protected $fillable = [
         'name',
