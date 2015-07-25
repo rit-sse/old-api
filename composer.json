@@ -12,7 +12,8 @@
         "ext-tokenizer": "*",
         "laravel/framework": "5.1.*",
         "doctrine/dbal": "~2.5",
-        "laravel/socialite": "^2.0"
+        "laravel/socialite": "^2.0",
+        "tymon/jwt-auth": "^0.5.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
