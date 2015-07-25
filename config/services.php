@@ -14,6 +14,12 @@ return [
     |
     */
 
+    'google' => [
+        'client_id' => 'INSERT CLIENT ID HERE',
+        'client_secret' => 'INSERT CLIENT SECRET HERE',
+        'redirect' => 'INSERT REDIRECT PATH HERE',
+    ],
+
     'mailgun' => [
         'domain' => '',
         'secret' => '',

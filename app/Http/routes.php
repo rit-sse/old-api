@@ -36,6 +36,15 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ]);
         });
 
+        // Authentication routes
+        Route::get(
+            'auth/google', 'Auth\AuthController@redirectToProvider'
+        );
+        Route::get(
+            'auth/google/callback',
+            'Auth\AuthController@handleProviderCallback'
+        );
+
         Route::delete('/agenda', 'AgendaController@clear');
         Route::resource(
             'agenda',

@@ -26,6 +26,19 @@ To get started, follow these steps:
 This will initialize your development database with seed data and start the
 development server locally on port 8000.
 
+## Authentication
+
+The API uses the Google OAuth 2.0 service for authentication. This is a workaround
+that allows us to remove the need to interact directly with Shibboleth. In order to
+test the authentication service, you need to generate a client id, secret, and insert
+a callback URL into `config/services.php` under the `google` key.
+
+To generate the necessary client id and secret, head to the [Google Developer Console](https://console.developers.google.com/project), create a project, select 'APIs & Auth > Credentials', and
+finally click 'Create a new Client ID'. Make sure you enter your *full* callback URL,
+which is `http[s]://{host}/api/v1/auth/google/callback`.
+
+*Note*: To prevent unauthorized errors, you **must** also enable the Google+ API!
+
 ## Endpoints
 
 The endpoints are controlled by Laravel routes. To look at the routing setup,
