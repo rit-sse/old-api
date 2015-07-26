@@ -12,7 +12,9 @@ class Member extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'url'
+    ];
 
     protected $hidden = [
         'created_at',
@@ -54,6 +56,22 @@ class Member extends Model
     public function memberships()
     {
         return $this->hasMany('App\Membership');
+    }
+
+    /**
+     * Establishes the One To One relationship with Mentor.
+     */
+    public function mentor()
+    {
+        return $this->hasOne('App\Mentor');
+    }
+
+    /**
+     * Establishes the One To One relationship with Officer.
+     */
+    public function officer()
+    {
+        return $this->hasOne('App\Officer');
     }
 
     /**
