@@ -9,7 +9,14 @@ class Mentor extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'url'
+    ];
+
+    public function member()
+    {
+        return $this->belongsTo('App\Member');
+    }
 
     public function getUrlAttribute()
     {
