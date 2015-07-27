@@ -13,12 +13,14 @@ class Member extends Model
     use SoftDeletes;
 
     protected $appends = [
+        'profiles',
         'url'
     ];
 
     protected $hidden = [
         'created_at',
         'deleted_at',
+        'externalProfiles',
         'updated_at',
     ];
 
@@ -43,7 +45,15 @@ class Member extends Model
     ];
 
     /**
-     * Establishes the One To Many relationship with Group.
+     * Establishes the One To Many relationship with ExternalProfile.
+     */
+    public function externalProfiles()
+    {
+        return $this->hasMany('App\ExternalProfile');
+    }
+
+    /**
+     * Establishes the inverse One To Many relationship with Group.
      */
     public function groups()
     {
@@ -72,6 +82,20 @@ class Member extends Model
     public function officer()
     {
         return $this->hasOne('App\Officer');
+    }
+
+    /**
+     * Profiles getter.
+     */
+    public function getProfilesAttribute()
+    {
+        $profiles = [];
+
+        foreach($this->externalProfiles as $profile) {
+            $profiles[$profile->provider] = $profile->identifier;
+        }
+
+        return $profiles;
     }
 
     /**

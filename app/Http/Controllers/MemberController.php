@@ -27,7 +27,7 @@ class MemberController extends Controller
             $request->only(['first_name', 'last_name', 'email', 'group'])
         );
 
-        $members = Member::query();
+        $members = Member::with('externalProfiles');
 
         if (array_key_exists('group', $queryParameters)) {
             $groupId = $queryParameters['group'];
