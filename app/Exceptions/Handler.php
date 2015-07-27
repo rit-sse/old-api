@@ -5,6 +5,7 @@ namespace App\Exceptions;
 use Exception;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Response;
 
 class Handler extends ExceptionHandler
 {
@@ -39,6 +40,28 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $e)
     {
+        if ($request->wantsJson()) {
+            $response = [
+                'error' => is_null($e->getMessage()) ?
+                    $e->getMessage() : 'unknown error',
+            ];
+
+            if (config('app.debug')) {
+                $response['exception'] = get_class($e);
+                $response['message'] = $e->getMessage();
+                $response['trace'] = $e->getTrace();
+            }
+
+            // Default response of 500
+            $status = Response::HTTP_INTERNAL_SERVER_ERROR;
+
+            if ($this->isHttpException($e)) {
+                $status = $e->getStatusCode();
+            }
+
+            return response()->json($response, $status);
+        }
+
         return parent::render($request, $e);
     }
 }
