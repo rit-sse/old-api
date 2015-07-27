@@ -41,7 +41,7 @@ class Authenticate
         if (!($token = $this->auth->setRequest($request)->getToken())) {
             return new JsonResponse(
                 ['error' => 'authorization required'],
-                Response::HTTP_FORBIDDEN
+                Response::HTTP_UNAUTHORIZED
             );
         }
 
