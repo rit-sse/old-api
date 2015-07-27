@@ -24,7 +24,7 @@ class MemberController extends Controller
     public function index(Request $request)
     {
         $queryParameters = array_filter(
-            $request->only(['first_name', 'last_name', 'username', 'group'])
+            $request->only(['first_name', 'last_name', 'email', 'group'])
         );
 
         $members = Member::query();
@@ -58,14 +58,14 @@ class MemberController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
-            'username' => 'required|unique:members,username|regex:/[a-zA-Z]{2,3}\d{4}/',
+            'email' => 'required|unique:members,email|regex:/[a-zA-Z]{2,3}\d{4}/',
         ]);
 
         $member = new Member();
 
         $member->first_name = $request->input('first_name');
         $member->last_name = $request->input('last_name');
-        $member->username = $request->input('username');
+        $member->email = $request->input('email');
 
         $member->save();
 

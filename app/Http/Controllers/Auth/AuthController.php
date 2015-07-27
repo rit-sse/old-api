@@ -12,8 +12,6 @@ use JWTAuth;
 
 class AuthController extends Controller
 {
-    private $pattern = '/(.*)@(g.)?rit.edu/';
-
     /**
      * Redirect the user to the GitHub authentication page.
      *
@@ -21,6 +19,12 @@ class AuthController extends Controller
      */
     public function redirectToProvider(Request $request)
     {
+        // FIXME: Use GoogleRitProvider to make the request.
+        // The main different that GoogleRitProvider brings is
+        // that it adds an 'hd' parameter to the request that
+        // restricts which domains our app will accept. For some
+        // reason, the GoogleRitProvider doesn't generate a state
+        // string, which causes problems for the callback.
         $provider = \Socialite::driver('google');
         $provider->scopes(['email', 'profile']);
 
@@ -48,25 +52,22 @@ class AuthController extends Controller
         );
 
         $user = $provider->user();
-        if (array_get($user->user, 'domain', '') != 'g.rit.edu') {
+        if (!ends_with(array_get($user->user, 'domain', ''), 'rit.edu')) {
             return new JsonResponse(
-                ['error' => 'Domain user not authorized.'],
+                ['error' => 'domain user not authorized'],
                 Response::HTTP_FORBIDDEN
             );
         }
 
-        if (preg_match($this->pattern, $user->email, $matches)) {
-            $username = $matches[1];
-            $member = Member::firstOrCreate([
-                'first_name' => $user->user['name']['givenName'],
-                'last_name' => $user->user['name']['familyName'],
-                'username' => $username
-            ]);
+        // FIXME: Probably don't want firstOrCreate here, in case
+        // someone changes their name on Google (e.g. JOHN -> John).
+        $member = Member::firstOrCreate([
+            'first_name' => $user->user['name']['givenName'],
+            'last_name' => $user->user['name']['familyName'],
+            'email' => $user->email
+        ]);
 
-            $token = JWTAuth::fromUser($member);
-            return response()->json($token);
-        } else {
-            abort(500);
-        }
+        $token = JWTAuth::fromUser($member);
+        return response()->json($token);
     }
 }

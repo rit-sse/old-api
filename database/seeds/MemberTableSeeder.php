@@ -17,7 +17,7 @@ class MemberTableSeeder extends Seeder
 
         $member->first_name = 'John';
         $member->last_name = 'Doe';
-        $member->username = 'jxd1234';
+        $member->username = 'jxd1234@g.rit.edu';
 
         $member->save();
     }
