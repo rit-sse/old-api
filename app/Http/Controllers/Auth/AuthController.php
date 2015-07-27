@@ -6,9 +6,10 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Routing\Controller;
+use JWTAuth;
 
 use App\Member;
-use JWTAuth;
+use App\Providers\GoogleRitProvider;
 
 class AuthController extends Controller
 {
@@ -38,7 +39,7 @@ class AuthController extends Controller
      */
     public function handleProviderCallback(Request $request)
     {
-        if (env('APP_ENV', 'local')) {
+        if (\App::environment('local')) {
             $member = Member::findOrFail(1);
             $token = JWTAuth::fromUser($member);
             return response()->json($token);
