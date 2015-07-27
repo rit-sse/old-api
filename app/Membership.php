@@ -12,12 +12,18 @@ class Membership extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'member_url',
+        'term_url',
+        'url',
+    ];
 
     protected $hidden = [
         'member_id',
         'created_at',
         'deleted_at',
+        'member',
+        'term',
         'updated_at',
     ];
 
@@ -43,6 +49,16 @@ class Membership extends Model
     public function term()
     {
         return $this->belongsTo('App\Term');
+    }
+
+    public function getMemberUrlAttribute()
+    {
+        return $this->member->url;
+    }
+
+    public function getTermUrlAttribute()
+    {
+        return $this->term->url;
     }
 
     public function getUrlAttribute()

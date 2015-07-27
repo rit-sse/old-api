@@ -13,6 +13,7 @@ class Member extends Model
     use SoftDeletes;
 
     protected $appends = [
+        'memberships_url',
         'profiles',
         'url'
     ];
@@ -21,6 +22,7 @@ class Member extends Model
         'created_at',
         'deleted_at',
         'externalProfiles',
+        'memberships',
         'updated_at',
     ];
 
@@ -82,6 +84,14 @@ class Member extends Model
     public function officer()
     {
         return $this->hasOne('App\Officer');
+    }
+
+    /**
+     *
+     */
+    public function getMembershipsUrlAttribute()
+    {
+        return route('api.v1.memberships.index', ['member' => $this->id]);
     }
 
     /**

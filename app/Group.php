@@ -15,6 +15,7 @@ class Group extends Model
         'created_at',
         'deleted_at',
         'head',
+        'members',
         'updated_at',
     ];
 

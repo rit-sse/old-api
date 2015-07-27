@@ -11,12 +11,17 @@ class Tip extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'member_url',
+        'updated_by_url',
+        'url',
+    ];
 
     protected $hidden = [
         'created_at',
         'created_by',
         'deleted_at',
+        'member',
         'updated_at',
         'updated_by',
     ];
@@ -29,14 +34,24 @@ class Tip extends Model
         'content',
     ];
 
-    public function author()
+    public function member()
     {
         return $this->belongsTo('App\Member', 'created_by');
     }
 
-    public function edited_by()
+    public function updated_by()
     {
-        return $this->belongsTo('App\Member', 'updated_by');
+        return $this->belongsTo('App\Member');
+    }
+
+    public function getMemberUrlAttribute()
+    {
+        return $this->member->url;
+    }
+
+    public function getUpdatedByUrlAttribute()
+    {
+        return $this->updated_by ? $this->updated_by->url : '';
     }
 
     public function getUrlAttribute()
