@@ -103,6 +103,6 @@ class Member extends Model
      */
     public function getUrlAttribute()
     {
-        return '/members/' . $this->id;
+        return route('api.v1.members.show', ['id' => $this->id]);
     }
 }

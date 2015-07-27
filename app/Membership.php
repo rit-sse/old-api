@@ -47,6 +47,6 @@ class Membership extends Model
 
     public function getUrlAttribute()
     {
-        return '/memberships/' . $this->id;
+        return route('api.v1.memberships.show', ['id' => $this->id]);
     }
 }

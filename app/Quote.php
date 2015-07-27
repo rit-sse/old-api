@@ -45,6 +45,6 @@ class Quote extends Model
 
     public function getUrlAttribute()
     {
-        return '/quotes/' . $this->id;
+        return route('api.v1.quotes.show', ['id' => $this->id]);
     }
 }

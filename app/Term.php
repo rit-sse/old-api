@@ -20,6 +20,6 @@ class Term extends Model
 
     public function getUrlAttribute()
     {
-        return '/terms/' . $this->id;
+        return route('api.v1.terms.show', ['id' => $this->id]);
     }
 }

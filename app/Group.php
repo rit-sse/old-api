@@ -43,6 +43,6 @@ class Group extends Model
 
     public function getUrlAttribute()
     {
-        return '/groups/' . $this->id;
+        return route('api.v1.groups.show', ['id' => $this->id]);
     }
 }

@@ -60,6 +60,6 @@ class Officer extends Model
 
     public function getUrlAttribute()
     {
-        return '/officers/' . $this->id;
+        return route('api.v1.officers.show', ['id' => $this->id]);
     }
 }

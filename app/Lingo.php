@@ -33,6 +33,6 @@ class Lingo extends Model
 
     public function getUrlAttribute()
     {
-        return '/lingo/' . $this->id;
+        return route('api.v1.lingo.show', ['id' => $this->id]);
     }
 }

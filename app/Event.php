@@ -23,6 +23,6 @@ class Event extends Model
 
     public function getUrlAttribute()
     {
-        return "/events/" . $this->id;
+        return route('api.v1.events.show', ['id' => $this->id]);
     }
 }

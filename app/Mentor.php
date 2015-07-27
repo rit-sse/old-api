@@ -20,6 +20,6 @@ class Mentor extends Model
 
     public function getUrlAttribute()
     {
-        return '/mentors/' . $this->id;
+        return route('api.v1.mentors.show', ['id' => $this->id]);
     }
 }
