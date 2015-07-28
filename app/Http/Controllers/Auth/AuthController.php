@@ -72,7 +72,7 @@ class AuthController extends Controller
         $member->save();
 
         $token = JWTAuth::fromUser(
-            $member, ['level' => config('auth.levels.google')]
+            $member, ['level' => config('auth.levels.high')]
         );
 
         return response()->json(['token' => $token]);
