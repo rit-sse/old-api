@@ -56,7 +56,7 @@ class QuoteController extends Controller
         $quote->body = $request->input('body');
         $quote->description = $request->input('description');
         // FIXME: Replace with currently auth'd member
-        $quote->member_id = 1;
+        $quote->member_id = $request->member->id;
 
         $quote->save();
 

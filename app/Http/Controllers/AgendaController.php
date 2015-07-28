@@ -70,7 +70,7 @@ class AgendaController extends Controller
         $agendaItem = new AgendaItem();
 
         $agendaItem->content = $request->input('content');
-        $agendaItem->created_by = 1;
+        $agendaItem->created_by = $request->member->id;
 
         $agendaItem->save();
 
@@ -124,7 +124,7 @@ class AgendaController extends Controller
         $agendaItem = AgendaItem::findOrFail($id);
 
         $agendaItem->content = $request->input('content', $agendaItem->content);
-        $agendaItem->updated_by = 1;
+        $agendaItem->updated_by = $request->member->id;
 
         $agendaItem->save();
 

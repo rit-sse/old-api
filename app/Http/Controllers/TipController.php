@@ -61,7 +61,7 @@ class TipController extends Controller
         $tip = new Tip();
 
         $tip->content = $request->input('content');
-        $tip->created_by = 1;
+        $tip->created_by = $request->member->id;
 
         $tip->save();
 
@@ -113,7 +113,7 @@ class TipController extends Controller
         $tip = Tip::findOrFail($id);
 
         $tip->content = $request->input('content');
-        $tip->updated_by = 1;
+        $tip->updated_by = $request->member->id;
 
         $tip->save();
 

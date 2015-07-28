@@ -54,6 +54,8 @@ class Authenticate
                     Response::HTTP_FORBIDDEN
                 );
             }
+
+            $request->member = $member;
         } catch (TokenExpiredException $e) {
             return new JsonResponse(
                 ['error' => 'token has expired'],

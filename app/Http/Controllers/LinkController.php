@@ -69,7 +69,7 @@ class LinkController extends Controller
 
         $link->expanded_link = $request->input('expanded_link');
         $link->go_link = $request->input('go_link');
-        $link->member_id = 1;
+        $link->member_id = $request->member->id;
 
         $link->save();
 
