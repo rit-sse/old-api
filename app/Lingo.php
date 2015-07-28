@@ -19,9 +19,7 @@ class Lingo extends Model
     protected $table = 'lingo';
 
     protected $hidden = [
-        'created_at',
         'deleted_at',
-        'updated_at',
     ];
 
     protected $dates = [

@@ -19,10 +19,8 @@ class Link extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'deleted_at',
         'member',
-        'updated_at',
     ];
 
     public function member()

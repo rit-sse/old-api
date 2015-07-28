@@ -18,11 +18,9 @@ class Tip extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'created_by',
         'deleted_at',
         'member',
-        'updated_at',
         'updated_by',
     ];
 

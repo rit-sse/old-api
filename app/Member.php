@@ -19,11 +19,9 @@ class Member extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'deleted_at',
         'externalProfiles',
         'memberships',
-        'updated_at',
     ];
 
     /**

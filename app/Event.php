@@ -9,12 +9,12 @@ class Event extends Model
 {
     use SoftDeletes;
 
-    protected $appends = ['url'];
+    protected $appends = [
+        'url'
+    ];
 
     protected $hidden = [
-        'created_at',
         'deleted_at',
-        'updated_at',
     ];
 
     protected $dates = [

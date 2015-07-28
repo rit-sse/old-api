@@ -21,13 +21,11 @@ class Officer extends Model
     ];
 
     protected $hidden = [
-        'created_at',
         'deleted_at',
         'member',
         'member_id',
         'term',
         'term_id',
-        'updated_at',
     ];
 
     protected $dates = [

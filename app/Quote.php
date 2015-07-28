@@ -18,9 +18,7 @@ class Quote extends Model
 
     protected $hidden = [
         'member_id',
-        'created_at',
         'deleted_at',
-        'updated_at',
     ];
 
     protected $dates = [
