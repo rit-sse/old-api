@@ -20,13 +20,13 @@ class AuthController extends Controller
      */
     public function redirectToProvider(Request $request)
     {
-        // FIXME: Use GoogleRitProvider to make the request.
-        // The main different that GoogleRitProvider brings is
-        // that it adds an 'hd' parameter to the request that
-        // restricts which domains our app will accept. For some
-        // reason, the GoogleRitProvider doesn't generate a state
-        // string, which causes problems for the callback.
-        $provider = \Socialite::driver('google');
+        $provider = new GoogleRitProvider(
+            $request,
+            config('services.google.client_id'),
+            config('services.google.client_secret'),
+            config('services.google.redirect')
+        );
+
         $provider->scopes(['email', 'profile']);
 
         return $provider->redirect();

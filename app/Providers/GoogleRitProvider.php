@@ -6,9 +6,9 @@ use Laravel\Socialite\Two\GoogleProvider;
 
 class GoogleRitProvider extends GoogleProvider
 {
-    protected function getCodeFields($states = null)
+    protected function getCodeFields($state = null)
     {
-        $fields = parent::getCodeFields();
+        $fields = parent::getCodeFields($state);
 
         $fields['hd'] = 'g.rit.edu';
 
