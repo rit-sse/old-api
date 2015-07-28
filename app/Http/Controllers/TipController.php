@@ -26,7 +26,7 @@ class TipController extends Controller
      * Display a listing of the tip.
      *
      * @Get("/")
-     * @Response(200, body={"id": 1, "content": "The lab is in GOL-1670.",
+     * @Response(200, body={"id": 1, "body": "The lab is in GOL-1670.",
      *                      "author_url": "/members/1", "edited_by": "",
      *                      "url": "/tips/1"})
      * @return Response
@@ -45,22 +45,22 @@ class TipController extends Controller
      *
      * @Post("/")
      * @Transaction(
-     *     @Request({"content": "Reviews are on Sundays!"}),
-     *     @Response(201, body={"id": 1, "content": "The lab is in GOL-1670.",
+     *     @Request({"body": "Reviews are on Sundays!"}),
+     *     @Response(201, body={"id": 1, "body": "The lab is in GOL-1670.",
      *                          "author_url": "/members/1", "edited_by": "",
      *                          "url": "/tips/1"}),
-     *     @Response(422, body={"content": {"The content field is required."}})
+     *     @Response(422, body={"body": {"The body field is required."}})
      * )
      * @param  Request  $request
      * @return Response
      */
     public function store(Request $request)
     {
-        $this->validate($request, ['content' => 'required']);
+        $this->validate($request, ['body' => 'required']);
 
         $tip = new Tip();
 
-        $tip->content = $request->input('content');
+        $tip->body = $request->input('body');
         $tip->created_by = $request->member->id;
 
         $tip->save();
@@ -72,7 +72,7 @@ class TipController extends Controller
      * Display the specified tip.
      *
      * @Get("/{id}")
-     * @Response(200, body={"id": 1, "content": "The lab is in GOL-1670.",
+     * @Response(200, body={"id": 1, "body": "The lab is in GOL-1670.",
      *                      "author_url": "/members/1", "url": "/tips/1"})
      * @param  int  $id
      * @return Response
@@ -98,9 +98,9 @@ class TipController extends Controller
      *
      * @Put("/{id}")
      * @Transaction(
-     *     @Request({"content": "The lab is in GOL-1650."}),
+     *     @Request({"body": "The lab is in GOL-1650."}),
      *     @Response(200, body={}),
-     *     @Response(422, body={"content": {"The content field is required."}})
+     *     @Response(422, body={"body": {"The body field is required."}})
      * )
      * @param  Request  $request
      * @param  int  $id
@@ -108,11 +108,11 @@ class TipController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $this->validate($request, ['content' => 'required']);
+        $this->validate($request, ['body' => 'required']);
 
         $tip = Tip::findOrFail($id);
 
-        $tip->content = $request->input('content');
+        $tip->body = $request->input('body');
         $tip->updated_by = $request->member->id;
 
         $tip->save();

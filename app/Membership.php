@@ -19,10 +19,11 @@ class Membership extends Model
     ];
 
     protected $hidden = [
-        'member_id',
         'deleted_at',
         'member',
+        'member_id',
         'term',
+        'term_id',
     ];
 
     protected $dates = [

@@ -15,7 +15,7 @@ class AgendaItemTableSeeder extends Seeder
     {
         $agendaItem = new AgendaItem();
 
-        $agendaItem->content = 'Should the PR committee get PR branded SSE swag?';
+        $agendaItem->body = 'Should the PR committee get PR branded SSE swag?';
         $agendaItem->created_by = 1;
 
         $agendaItem->save();

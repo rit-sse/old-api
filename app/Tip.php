@@ -29,7 +29,7 @@ class Tip extends Model
     ];
 
     protected $fillable = [
-        'content',
+        'body',
     ];
 
     public function member()

@@ -20,7 +20,7 @@ class AgendaItem extends Model
     ];
 
     protected $fillable = [
-        'item',
+        'body',
     ];
 
     protected $hidden = [
