@@ -23,6 +23,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
     Route::group(['prefix' => 'v1'], function () {
         Route::get('/', ['as' => 'api.v1', function() {
             return response()->json([
+                'agenda_url' => route('api.v1.agenda.index'),
                 'events_url' => route('api.v1.events.index'),
                 'groups_url' => route('api.v1.groups.index'),
                 'lingo_url' => route('api.v1.lingo.index'),
@@ -43,6 +44,13 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::get(
             'auth/google/callback',
             'Auth\AuthController@handleProviderCallback'
+        );
+
+        Route::delete('/agenda', 'AgendaController@clear');
+        Route::resource(
+            'agenda',
+            'AgendaController',
+            ['except' => ['create', 'edit']]
         );
 
         Route::resource(
