@@ -19,6 +19,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Authentication Levels
+    |--------------------------------------------------------------------------
+    |
+    | There are various levels of authentication that the API will accept. For
+    | example, logging in via Google authentication grants the highest level
+    | whereas issuing commands from slack has a much lower level.
+    |
+    */
+    'levels' => [
+        'high' => 1000,
+        'low' => 100,
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Model
     |--------------------------------------------------------------------------
     |

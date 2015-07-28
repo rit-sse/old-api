@@ -36,7 +36,7 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $level = 1000)
     {
         if (!($token = $this->auth->setRequest($request)->getToken())) {
             return new JsonResponse(
@@ -47,6 +47,13 @@ class Authenticate
 
         try {
             $member = $this->auth->authenticate($token);
+
+            if ($this->auth->getPayload()->get('level') < $level) {
+                return new JsonResponse(
+                    ['error' => 'authentication level not high enough'],
+                    Response::HTTP_FORBIDDEN
+                );
+            }
         } catch (TokenExpiredException $e) {
             return new JsonResponse(
                 ['error' => 'token has expired'],

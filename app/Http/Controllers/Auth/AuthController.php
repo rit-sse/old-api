@@ -41,7 +41,9 @@ class AuthController extends Controller
     {
         if (\App::environment('local')) {
             $member = Member::findOrFail(1);
-            $token = JWTAuth::fromUser($member);
+            $token = JWTAuth::fromUser(
+                $member, ['level' => config('auth.levels.high')]
+            );
             return response()->json($token);
         }
 
@@ -60,15 +62,19 @@ class AuthController extends Controller
             );
         }
 
-        // FIXME: Probably don't want firstOrCreate here, in case
-        // someone changes their name on Google (e.g. JOHN -> John).
-        $member = Member::firstOrCreate([
-            'first_name' => $user->user['name']['givenName'],
-            'last_name' => $user->user['name']['familyName'],
+        $member = Member::firstOrNew([
             'email' => $user->email
         ]);
 
-        $token = JWTAuth::fromUser($member);
+        $member->first_name = $user->user['name']['givenName'];
+        $member->last_name= $user->user['name']['familyName'];
+
+        $member->save();
+
+        $token = JWTAuth::fromUser(
+            $member, ['level' => config('auth.levels.google')]
+        );
+
         return response()->json(['token' => $token]);
     }
 }
