@@ -54,7 +54,11 @@ class AuthController extends Controller
             }
 
             $token = JWTAuth::fromUser(
-                $member, ['level' => config('auth.levels.high')]
+                $member,
+                [
+                    'level' => config('auth.levels.high'),
+                    'member' => $member,
+                ]
             );
 
             return response()->json($token);
@@ -68,7 +72,7 @@ class AuthController extends Controller
         );
 
         $user = $provider->user();
-        if (!ends_with(array_get($user->user, 'domain', ''), 'rit.edu')) {
+        if (array_get($user->user, 'domain', '') != 'g.rit.edu') {
             return new JsonResponse(
                 ['error' => 'domain user not authorized'],
                 Response::HTTP_FORBIDDEN
@@ -89,7 +93,11 @@ class AuthController extends Controller
         }
 
         $token = JWTAuth::fromUser(
-            $member, ['level' => config('auth.levels.high')]
+            $member,
+            [
+                'level' => config('auth.levels.high'),
+                'member' => $member,
+            ]
         );
 
         return response()->json(['token' => $token]);
