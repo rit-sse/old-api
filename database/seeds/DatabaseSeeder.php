@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
         $this->call(TipTableSeeder::class);
         $this->call(GroupTableSeeder::class);
         $this->call(AgendaItemTableSeeder::class);
+        $this->call(RolesTableSeeder::class);
 
         Model::reguard();
     }

@@ -154,6 +154,7 @@ return [
          */
         Laravel\Socialite\SocialiteServiceProvider::class,
         Tymon\JWTAuth\Providers\JWTAuthServiceProvider::class,
+        Zizaco\Entrust\EntrustServiceProvider::class,
 
         /*
          * Application Service Providers...
@@ -212,6 +213,7 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+        'Entrust'   => Zizaco\Entrust\EntrustFacade::class,
 
     ],
 

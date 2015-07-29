@@ -47,6 +47,20 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Authentication Roles
+    |--------------------------------------------------------------------------
+    |
+    | There are various roles that can be used to restrict access to methods.
+    | This configuration option defines which roles get access to all methods
+    | by default.
+    |
+    */
+    'super_roles' => [
+        'admin'
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Authentication Table
     |--------------------------------------------------------------------------
     |

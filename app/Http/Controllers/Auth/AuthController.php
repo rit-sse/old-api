@@ -10,6 +10,7 @@ use JWTAuth;
 
 use App\Member;
 use App\Providers\GoogleRitProvider;
+use App\Role;
 
 class AuthController extends Controller
 {
@@ -27,7 +28,9 @@ class AuthController extends Controller
             config('services.google.redirect')
         );
 
-        $provider->scopes(['email', 'profile']);
+        $provider->scopes(
+            ['email', 'profile']
+        );
 
         return $provider->redirect();
     }
@@ -39,11 +42,21 @@ class AuthController extends Controller
      */
     public function handleProviderCallback(Request $request)
     {
+        // Used for development purposes. Hit /auth/google/callback
+        // to get a dummy JWT for local use.
         if (\App::environment('local')) {
             $member = Member::findOrFail(1);
+
+            if (!($member->hasRole('member'))) {
+                $member->attachRole(
+                    Role::where('name', 'member')->firstOrFail()
+                );
+            }
+
             $token = JWTAuth::fromUser(
                 $member, ['level' => config('auth.levels.high')]
             );
+
             return response()->json($token);
         }
 
@@ -70,6 +83,10 @@ class AuthController extends Controller
         $member->last_name= $user->user['name']['familyName'];
 
         $member->save();
+
+        if (!($member->hasRole('member'))) {
+            $member->attachRole(Role::where('name', 'member')->firstOrFail());
+        }
 
         $token = JWTAuth::fromUser(
             $member, ['level' => config('auth.levels.high')]

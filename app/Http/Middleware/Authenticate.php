@@ -19,6 +19,11 @@ class Authenticate
     protected $auth;
 
     /**
+     * @var array
+     */
+    protected $roles;
+
+    /**
      * Create a new filter instance.
      *
      * @param  Guard  $auth
@@ -27,6 +32,7 @@ class Authenticate
     public function __construct(JWTAuth $auth)
     {
         $this->auth = $auth;
+        $this->roles = config('auth.super_roles');
     }
 
     /**
@@ -36,8 +42,9 @@ class Authenticate
      * @param  \Closure  $next
      * @return mixed
      */
-    public function handle($request, Closure $next, $level = 1000)
+    public function handle($request, Closure $next)
     {
+        // Step 1. Fail immediately if we don't have a token in the request.
         if (!($token = $this->auth->setRequest($request)->getToken())) {
             return new JsonResponse(
                 ['error' => 'authorization required'],
@@ -46,8 +53,28 @@ class Authenticate
         }
 
         try {
+            // Step 2. Validate the given token.
             $member = $this->auth->authenticate($token);
 
+            $permissions = array_merge(
+                ['level' => 1000, 'roles' => []],
+                array_get(
+                    config('route.permissions'),
+                    $request->route()->getName(),
+                    []
+                )
+            );
+
+            // This ensures that super roles are not overwritten by
+            // route permission configurations.
+            $permissions['roles'] = array_merge(
+                $permissions['roles'],
+                $this->roles
+            );
+
+            $level = $permissions['level'];
+
+            // Step 3. Check the auth level encoded in the token.
             if ($this->auth->getPayload()->get('level') < $level) {
                 return new JsonResponse(
                     ['error' => 'authentication level not high enough'],
@@ -55,6 +82,16 @@ class Authenticate
                 );
             }
 
+            // Step 4. Verify the role(s) of the member.
+            $roles = $permissions['roles'];
+            if (!($member->hasRole($roles))) {
+                return new JsonResponse(
+                    ['error' => 'invalid permissions'],
+                    Response::HTTP_FORBIDDEN
+                );
+            }
+
+            // Step 5. Attach member to the current request.
             $request->member = $member;
         } catch (TokenExpiredException $e) {
             return new JsonResponse(
@@ -73,6 +110,7 @@ class Authenticate
             );
         }
 
+        // Step 6. ???
         if (!$member) {
             return new JsonResponse(
                 ['error' => 'entity does not exist'],
@@ -80,6 +118,7 @@ class Authenticate
             );
         }
 
+        // Step 7. Profit!
         return $next($request);
     }
 }
