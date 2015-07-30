@@ -15,13 +15,10 @@ To get started, follow these steps:
 
 1. Change directory into the root of the repository.
 1. Execute `composer install` (this assumes you have installed Composer as `composer` in your `PATH`).
-1. Make a copy of `.env.example` and save it as `.env`.
-1. Init app storage (sessions, cache, etc.) and the database: `./bootstrap/init_storage.sh`
-1. Generate a random app key: `php artisan key:generate`.
-1. Execute `php artisan migrate:refresh --seed`.
-1. Execute `php -S localhost:8000 server.php`.  _Note_: If you are having issues
-   running the [api-client][api-client] locally, run `php -S 0.0.0.0:8000
-   server.php` instead.
+1. Init your environment (sessions, cache, etc.) and the database: `./bootstrap/init.php`
+1. Execute `php -S localhost:8000 server.php`.
+
+_Note_: If you are having issues running the [api-client][api-client] locally, run `php -S 0.0.0.0:8000 server.php` instead.
 
 This will initialize your development database with seed data and start the
 development server locally on port 8000.
