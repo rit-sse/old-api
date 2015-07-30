@@ -26,7 +26,7 @@ class GroupController extends Controller
      *
      * @Get("/")
      * @Response(200, body={{"id": 1, "name": "Website Committee",
-     *                       "head_id": 1, "head_url": "/officers/1",
+     *                       "officer_id": 1, "officer_url": "/officers/1",
      *                       "url": "/groups/1"}})
      * @return Response
      */
@@ -50,12 +50,12 @@ class GroupController extends Controller
      *
      * @Post("/")
      * @Transaction(
-     *     @Request({"name": "Heist Organizers", "head_id": 1}),
+     *     @Request({"name": "Heist Organizers", "officer_id": 1}),
      *     @Response(201, body={{"id": 2, "name": "Heist Organizers",
-     *                           "head_id": 1, "head_url": "/officers/1",
+     *                           "officer_id": 1, "officer_url": "/officers/1",
      *                           "url": "/groups/2"}}),
      *     @Response(422, body={"name": {"The name is already taken."},
-     *                          "head_id": {"The head id does not exist."}})
+     *                          "officer_id": {"The officer id does not exist."}})
      * )
      * @param  Request  $request
      * @return Response
@@ -64,13 +64,13 @@ class GroupController extends Controller
     {
         $this->validate($request, [
             'name' => 'required|unique:groups,name',
-            'head_id' => 'required|exists:officers,id',
+            'officer_id' => 'required|exists:officers,id',
         ]);
 
         $group = new Group();
 
         $group->name = $request->input('name');
-        $group->head_id = $request->input('head_id');
+        $group->officer_id = $request->input('officer_id');
 
         $group->save();
 
@@ -83,7 +83,7 @@ class GroupController extends Controller
      * @Get("/{id}")
      * @Transaction(
      *     @Response(200, body={{"id": 1, "name": "Website Committee",
-     *                           "head_id": 1, "head_url": "/officers/1",
+     *                           "officer_id": 1, "officer_url": "/officers/1",
      *                           "url": "/groups/1"}}),
      *     @Response(404, body={"error": "not found"})
      * )
@@ -93,7 +93,7 @@ class GroupController extends Controller
     public function show($id)
     {
         try {
-            $group = Group::with('head')->findOrFail($id);
+            $group = Group::with('officer')->findOrFail($id);
 
             return response()->json($group);
         } catch (ModelNotFoundException $e) {
@@ -108,12 +108,12 @@ class GroupController extends Controller
      *
      * @Put("/{id}")
      * @Transaction(
-     *     @Request({"name": "Heist Committee", "head_id": 2}),
+     *     @Request({"name": "Heist Committee", "officer_id": 2}),
      *     @Response(200, body={{"id": 1, "name": "Website Committee",
-     *                           "head_id": 1, "head_url": "/officers/1",
+     *                           "officer_id": 1, "officer_url": "/officers/1",
      *                           "url": "/groups/1"}}),
      *     @Response(422, body={"name": {"That name is already taken."},
-     *                          "head_id": {"The head id does not exist."}})
+     *                          "officer_id": {"The officer id does not exist."}})
      * )
      * @param  Request  $request
      * @param  int  $id
@@ -123,13 +123,13 @@ class GroupController extends Controller
     {
         $this->validate($request, [
             'name' => 'unique:groups,name',
-            'head_id' => 'required|exists:officers,id',
+            'officer_id' => 'required|exists:officers,id',
         ]);
 
         $group = Group::findOrFail($id);
 
         $group->name = $request->input('name', $group->name);
-        $group->head_id = $request->input('head_id', $group->head_id);
+        $group->officer_id = $request->input('officer_id', $group->officer_id);
 
         $group->save();
 

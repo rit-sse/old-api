@@ -16,11 +16,9 @@ class CreateAgendaItemsTable extends Migration
             $table->increments('id');
 
             $table->string('content');
-            $table->integer('created_by')->unsigned();
-            $table->integer('updated_by')->unsigned()->nullable();
+            $table->integer('group_id')->unsigned();
 
-            $table->foreign('created_by')->references('id')->on('members');
-            $table->foreign('updated_by')->references('id')->on('members');
+            $table->foreign('group_id')->references('id')->on('groups');
 
             $table->softDeletes();
             $table->timestamps();

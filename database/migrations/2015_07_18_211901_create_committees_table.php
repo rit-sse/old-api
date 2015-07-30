@@ -16,9 +16,9 @@ class CreateCommitteesTable extends Migration
             $table->increments('id');
 
             $table->string('name');
-            $table->integer('head_id')->unsigned();
+            $table->integer('officer_id')->unsigned();
 
-            $table->foreign('head_id')->references('id')->on('members');
+            $table->foreign('officer_id')->references('id')->on('officers');
 
             $table->softDeletes();
             $table->timestamps();

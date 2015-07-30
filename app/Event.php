@@ -10,16 +10,28 @@ class Event extends Model
     use SoftDeletes;
 
     protected $appends = [
-        'url'
+        'group_url',
+        'url',
     ];
 
     protected $hidden = [
         'deleted_at',
+        'group',
     ];
 
     protected $dates = [
         'deleted_at',
     ];
+
+    public function group()
+    {
+        return $this->belongsTo('App\Group');
+    }
+
+    public function getGroupUrlAttribute()
+    {
+        return $this->group->url;
+    }
 
     public function getUrlAttribute()
     {

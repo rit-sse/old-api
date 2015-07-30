@@ -15,6 +15,8 @@ class EventTableSeeder extends Seeder
     {
         $event = new Event();
 
+        $event->group_id = 1;
+
         $event->save();
     }
 }

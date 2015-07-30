@@ -16,7 +16,7 @@ class GroupTableSeeder extends Seeder
         $group = new Group();
 
         $group->name = 'Projects';
-        $group->head_id = 1;
+        $group->officer_id = 1;
 
         $group->save();
 
