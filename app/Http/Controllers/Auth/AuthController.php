@@ -5,9 +5,9 @@ namespace App\Http\Controllers\Auth;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Routing\Controller;
 use JWTAuth;
 
+use App\Http\Controllers\Controller;
 use App\Member;
 use App\Providers\GoogleRitProvider;
 use App\Role;
@@ -21,11 +21,11 @@ class AuthController extends Controller
      */
     public function redirectToProvider(Request $request)
     {
+        $callback = $request->input('callback');
+
         $provider = new GoogleRitProvider(
             $request,
-            config('services.google.client_id'),
-            config('services.google.client_secret'),
-            config('services.google.redirect')
+            $callback
         );
 
         $provider->scopes(
@@ -65,10 +65,7 @@ class AuthController extends Controller
         }
 
         $provider = new GoogleRitProvider(
-            $request,
-            config('services.google.client_id'),
-            config('services.google.client_secret'),
-            config('services.google.redirect')
+            $request
         );
 
         $user = $provider->user();
@@ -100,6 +97,10 @@ class AuthController extends Controller
             ]
         );
 
-        return response()->json(['token' => $token]);
+        if ($callback = $provider->getCallback()) {
+            return redirect($callback . '?token=' . $token);
+        } else {
+            return response()->json(['token' => $token]);
+        }
     }
 }
