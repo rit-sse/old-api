@@ -11,6 +11,8 @@ class Tip extends Model
 {
     use SoftDeletes;
 
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $appends = [
         'member_url',
         'updated_by_url',

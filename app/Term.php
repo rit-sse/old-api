@@ -11,6 +11,8 @@ class Term extends Model
 {
     public $timestamps = false;
 
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $appends = [
         'name',
         'url',

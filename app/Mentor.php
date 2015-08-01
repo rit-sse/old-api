@@ -9,6 +9,8 @@ class Mentor extends Model
 {
     use SoftDeletes;
 
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $appends = [
         'member_url',
         'url'

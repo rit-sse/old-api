@@ -9,6 +9,8 @@ class AgendaItem extends Model
 {
     use SoftDeletes;
 
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $appends = [
         'group_url',
         'url',

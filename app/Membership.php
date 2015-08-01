@@ -12,6 +12,8 @@ class Membership extends Model
 {
     use SoftDeletes;
 
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $appends = [
         'member_url',
         'term_url',

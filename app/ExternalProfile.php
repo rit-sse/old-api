@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class ExternalProfile extends Model
 {
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $fillable = [
         'provider',
         'identifier',

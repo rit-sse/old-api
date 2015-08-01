@@ -14,6 +14,8 @@ class Member extends Model
     use EntrustUserTrait;
     use SoftDeletes;
 
+    protected $dateFormat = \DateTime::ISO8601;
+
     protected $appends = [
         'memberships_url',
         'profiles',
