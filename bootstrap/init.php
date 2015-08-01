@@ -16,6 +16,7 @@ copy($DIR . '/../.env.example', $DIR . '/../.env');
 print 'Setting up application directories.' . PHP_EOL;
 create_path($DIR . '/../storage/app');
 create_path($DIR . '/../storage/framework');
+create_path($DIR . '/../storage/framework/sessions');
 create_path($DIR . '/../storage/logs');
 
 print 'Creating empty development database.' . PHP_EOL;
