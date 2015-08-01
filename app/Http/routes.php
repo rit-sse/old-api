@@ -122,5 +122,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             'TipController',
             ['except' => ['create', 'edit']]
         );
+
+        Route::controller('statistics', 'StatisticsController');
     });
 });
