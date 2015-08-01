@@ -169,7 +169,17 @@ class InitialSchema extends Migration
         Schema::create('events', function(Blueprint $table) {
             $table->increments('id');
 
+            $table->string('description');
+            $table->datetime('end_date');
+            $table->boolean('featured');
+            $table->string('image');
             $table->integer('group_id')->unsigned();
+            $table->string('location');
+            $table->string('name');
+            $table->string('recurrence')->nullable();
+            $table->string('short_description');
+            $table->string('short_name');
+            $table->datetime('start_date');
 
             $table->foreign('group_id')->references('id')->on('groups');
 
