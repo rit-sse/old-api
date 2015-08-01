@@ -11,6 +11,8 @@ things as events, members, memberships, mentors, officers, and so on.
 
 ## Getting Started
 
+On a Mac or Linux system? Check out [this](https://youtu.be/iF3erw9RVlg) video for a short screencast to speed things up.
+
 To get started, follow these steps:
 
 1. Change directory into the root of the repository.
