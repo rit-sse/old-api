@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
@@ -14,6 +15,52 @@ use App\Role;
 
 class AuthController extends Controller
 {
+    public function getToken(Request $request)
+    {
+        $this->validate($request, [
+            'id' => 'required',
+            'provider' => 'required',
+            'secret' => 'required',
+        ]);
+
+        $queryParameters = $request->only(['id', 'provider', 'secret']);
+
+        $id = $queryParameters['id'];
+        $provider = $queryParameters['provider'];
+        $secret = $queryParameters['secret'];
+
+        if (!(in_array($secret, config('auth.secrets')))) {
+            return new JsonResponse(
+                ['error' => 'invalid secret'], Response::HTTP_FORBIDDEN
+            );
+        }
+
+        $member = Member::whereHas(
+            'externalProfiles', function ($query) use ($id, $provider) {
+                $query->where('identifier', $id);
+                $query->where('provider', $provider);
+            }
+        );
+
+        try {
+            $member = $member->firstOrFail();
+
+            $token = JWTAuth::fromUser(
+                $member,
+                [
+                    'level' => config('auth.levels.low'),
+                    'member' => $member,
+                ]
+            );
+
+            return response()->json(['token' => $token]);
+        } catch (ModelNotFoundException $e) {
+            return new JsonResponse(
+                ['error' => 'not found'], Response::HTTP_NOT_FOUND
+            );
+        }
+    }
+
     /**
      * Redirect the user to the GitHub authentication page.
      *

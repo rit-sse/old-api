@@ -45,6 +45,9 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             'auth/google/callback',
             'Auth\AuthController@handleProviderCallback'
         );
+        Route::get(
+            'auth/token', 'Auth\AuthController@getToken'
+        );
 
         Route::delete('/agenda', 'AgendaController@clear');
         Route::resource(
