@@ -15,13 +15,13 @@ class TermTableSeeder extends Seeder
     {
         foreach(range(2015, 2030) as $year) {
             DB::table('terms')->insert([
-                'name' => 'Fall',
-                'year' => $year
+                'start_date' => date_create('08/20/' . $year),
+                'end_date' => date_create('12/31/' . $year)
             ]);
 
             DB::table('terms')->insert([
-                'name' => 'Spring',
-                'year' => $year + 1
+                'start_date' => date_create('01/01/' . ($year + 1)),
+                'end_date' => date_create('05/31/' . ($year + 1))
             ]);
         }
     }

@@ -32,13 +32,11 @@ class TermController extends Controller
     public function current_term()
     {
         $timezone = new \DateTimeZone('America/New_York');
-        $date = new \DateTime('now', $timezone);
+        $date = (new \DateTime('now', $timezone))->format('Y-m-d');
 
-        $month = intval($date->format('m'));
-        $year = $date->format('Y');
-        $name = ((12 >= $month && $month >= 8) || $month === 1) ? 'Fall' : 'Spring';
-
-        $term = Term::where(['name' => $name, 'year' => $year])->first();
+        $term = Term::where('start_date', '<=', $date)
+            ->where('end_date', '>=', $date)
+            ->first();
 
         return response()->json($term);
     }
@@ -51,9 +49,32 @@ class TermController extends Controller
      *                      {"id": 2, "name": "Fall", "year": "2015"}})
      * @return Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $terms = Term::all();
+        $this->validate($request, [
+            'date' => 'date',
+        ]);
+
+        $queryParameters = array_filter(
+            $request->only(['date', 'name'])
+        );
+
+        $terms = Term::query();
+
+        if (array_key_exists('date', $queryParameters)) {
+            $timezone = new \DateTimeZone('America/New_York');
+            $date = (new \DateTime('now', $timezone))->format('Y-m-d');
+            $terms->where('start_date', '<=', $date)
+                ->where('end_date', '>=', $date);
+        }
+
+        if (array_key_exists('name', $queryParameters)) {
+            $terms = $terms->get()->filter(function($term) use($queryParameters) {
+                return strpos($term->name, $queryParameters['name']) !== false;
+            });
+        } else {
+            $terms = $terms->get();
+        }
 
         return response()->json($terms);
     }
