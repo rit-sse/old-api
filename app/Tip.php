@@ -34,7 +34,7 @@ class Tip extends Model
 
     public function member()
     {
-        return $this->belongsTo('App\Member', 'created_by');
+        return $this->belongsTo('App\Member');
     }
 
     public function updated_by()
