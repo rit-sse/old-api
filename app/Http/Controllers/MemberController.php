@@ -101,6 +101,7 @@ class MemberController extends Controller
     public function update(Request $request, $id)
     {
         $member = Member::findOrFail($id);
+        // TODO handle exception
 
         $member->first_name = $request->input('first_name', $member->first_name);
         $member->last_name = $request->input('last_name', $member->last_name);
