@@ -79,3 +79,24 @@ $factory->define(App\Tip::class, function (Faker\Generator $faker) {
         'member_id' => $faker->numberBetween(1, 50),
     ];
 });
+
+/* Member->Profile Factory */
+$factory->define(App\ExternalProfile::class, function (Faker\Generator $faker) {
+    return [
+        'identifier' => 'U' . str_random(9),
+        'provider' => 'slack',
+    ];
+});
+
+/* Task Factory */
+$factory->define(App\Task::class, function (Faker\Generator $faker) {
+    return [
+        'name' => 'Random Task ' . $faker->text(30),
+        'description' => $faker->text(100),
+        'creator_id' => 1,
+        'assignee_id' => 1,
+        'completed' => false,
+    ];
+});
+
+
