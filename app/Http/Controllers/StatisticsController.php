@@ -25,7 +25,7 @@ class StatisticsController extends Controller
         $members = Member::orderBy('created_at', 'asc')->get(['created_at']);
 
         foreach ($members as $member) {
-            // Make a frequency array mapping date=>frequency`
+            // Make a frequency array mapping date=>frequency
             $date = $member->created_at->format('d/m/Y');
             if (array_key_exists($date, $result)) {
                 $result[$date]++;
