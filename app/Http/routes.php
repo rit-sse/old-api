@@ -14,14 +14,14 @@
 Route::get('/go/{go_link}', 'LinkController@resolveLink');
 
 Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
-    Route::get('/', ['as' => 'api', function() {
+    Route::get('/', ['as' => 'api', function () {
         return response()->json([
             'v1_url' => route('api.v1')
         ]);
     }]);
 
     Route::group(['prefix' => 'v1'], function () {
-        Route::get('/', ['as' => 'api.v1', function() {
+        Route::get('/', ['as' => 'api.v1', function () {
             return response()->json([
                 'agenda_url' => route('api.v1.agenda.index'),
                 'events_url' => route('api.v1.events.index'),
@@ -32,6 +32,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'mentors_url' => route('api.v1.mentors.index'),
                 'officers_url' => route('api.v1.officers.index'),
                 'quotes_url' => route('api.v1.quotes.index'),
+                'tasks-url' => route('api.v1.tasks.index'),
                 'terms_url' => route('api.v1.terms.index'),
                 'tips_url' => route('api.v1.tips.index'),
             ]);
@@ -107,6 +108,12 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         Route::resource(
             'quotes',
             'QuoteController',
+            ['except' => ['create', 'edit']]
+        );
+
+        Route::resource(
+            'tasks',
+            'TasksController',
             ['except' => ['create', 'edit']]
         );
 
