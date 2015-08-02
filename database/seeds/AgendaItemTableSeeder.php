@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-use App\AgendaItem;
-
 class AgendaItemTableSeeder extends Seeder
 {
     /**
@@ -13,11 +11,8 @@ class AgendaItemTableSeeder extends Seeder
      */
     public function run()
     {
-        $agendaItem = new AgendaItem();
-
-        $agendaItem->body = 'Should the PR committee get PR branded SSE swag?';
-        $agendaItem->group_id = 1;
-
-        $agendaItem->save();
+        factory('App\AgendaItem', 50)->create()->each(function ($agendaItem) {
+            $agendaItem->save();
+        });
     }
 }

@@ -2,9 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-use App\ExternalProfile;
-use App\Member;
-
 class MemberTableSeeder extends Seeder
 {
     /**

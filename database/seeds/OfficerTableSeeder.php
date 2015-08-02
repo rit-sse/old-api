@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Officer;
-
 class OfficerTableSeeder extends Seeder
 {
     /**
@@ -13,12 +11,8 @@ class OfficerTableSeeder extends Seeder
      */
     public function run()
     {
-        $officer = new Officer();
-
-        $officer->member_id = 1;
-        $officer->title = 'President';
-        $officer->term_id = 1;
-
-        $officer->save();
+        factory('App\Officer', 50)->create()->each(function ($officer) {
+            $officer->save();
+        });
     }
 }

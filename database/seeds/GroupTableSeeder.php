@@ -2,8 +2,6 @@
 
 use Illuminate\Database\Seeder;
 
-use App\Group;
-
 class GroupTableSeeder extends Seeder
 {
     /**
@@ -13,13 +11,8 @@ class GroupTableSeeder extends Seeder
      */
     public function run()
     {
-        $group = new Group();
-
-        $group->name = 'Projects';
-        $group->officer_id = 1;
-
-        $group->save();
-
-        $group->members()->attach(1);
+        factory('App\Group', 50)->create()->each(function ($group) {
+            $group->save();
+        });
     }
 }
