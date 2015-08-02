@@ -11,11 +11,17 @@
 |
 */
 
-$factory->define(App\User::class, function (Faker\Generator $faker) {
+$factory->define(App\Member::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->email,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+        'first_name' => str_random(8),
+        'last_name' => str_random(8),
+        'email' => str_random(7) . '@g.rit.edu',
+    ];
+});
+
+$factory->define(App\ExternalProfile::class, function (Faker\Generator $faker) {
+    return [
+        'identifier' => 'U' . str_random(9),
+        'provider' => 'slack',
     ];
 });

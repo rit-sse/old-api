@@ -14,19 +14,9 @@ class MemberTableSeeder extends Seeder
      */
     public function run()
     {
-        $profile = new ExternalProfile();
-
-        $profile->provider = 'slack';
-        $profile->identifier = 'U1234567890';
-
-        $member = new Member();
-
-        $member->first_name = 'John';
-        $member->last_name = 'Doe';
-        $member->email = 'jxd1234@g.rit.edu';
-
-        $member->save();
-
-        $member->externalProfiles()->save($profile);
+        factory('App\Member', 50)->create()->each(function ($member) {
+            $member->externalProfiles()
+                ->save(factory('App\ExternalProfile')->make());
+        });
     }
 }
