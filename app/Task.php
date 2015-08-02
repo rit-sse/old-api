@@ -26,6 +26,7 @@ class Task extends Model
     protected $hidden = [
         'creator',
         'assignee',
+        'deleted_at',
     ];
 
     /**
