@@ -2,11 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use DateTime;
 use Illuminate\Http\Request;
-
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
 
 use App\Member;
 
@@ -25,7 +22,7 @@ class StatisticsController extends Controller
     {
         $result = [];
 
-        $members = Member::orderBy('created_at', 'asc')->get(array('created_at'));
+        $members = Member::orderBy('created_at', 'asc')->get(['created_at']);
 
         foreach ($members as $member) {
             // Make a frequency array mapping date=>frequency`
