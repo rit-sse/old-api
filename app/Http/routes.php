@@ -32,11 +32,10 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'mentors_url' => route('api.v1.mentors.index'),
                 'officers_url' => route('api.v1.officers.index'),
                 'quotes_url' => route('api.v1.quotes.index'),
+                'statistics_members_url' => route('api.v1.statistics.members'),
                 'tasks_url' => route('api.v1.tasks.index'),
                 'terms_url' => route('api.v1.terms.index'),
                 'tips_url' => route('api.v1.tips.index'),
-
-                'statistics_members_url' => route('api.v1.statistics.members'),
             ]);
         }]);
 
@@ -113,6 +112,9 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ['except' => ['create', 'edit']]
         );
 
+        // FIXME: naming the statistics routes is hardcoded given route() issue
+        Route::get('statistics/members', ['uses' => 'StatisticsController@getMembers', 'as' => 'api.v1.statistics.members']);
+
         Route::resource(
             'tasks',
             'TasksController',
@@ -131,8 +133,5 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             'TipController',
             ['except' => ['create', 'edit']]
         );
-
-        // FIXME: naming the statistics routes is hardcoded given route() issue
-        Route::get('statistics/members', ['uses' => 'StatisticsController@getMembers', 'as' => 'api.v1.statistics.members']);
     });
 });
