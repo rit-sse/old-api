@@ -25,7 +25,7 @@ class Task extends Model
      */
     protected $hidden = [
         'creator',
-        'assignee'
+        'assignee',
     ];
 
     /**
@@ -45,11 +45,11 @@ class Task extends Model
     protected $fillable = [
         'name',
         'description',
-        'completed'
+        'completed',
     ];
 
     protected $casts = [
-        'completed' => 'boolean' // Always cast Task->completed as bool
+        'completed' => 'boolean', // Always cast Task->completed as bool
     ];
 
     /**

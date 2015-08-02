@@ -32,7 +32,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'mentors_url' => route('api.v1.mentors.index'),
                 'officers_url' => route('api.v1.officers.index'),
                 'quotes_url' => route('api.v1.quotes.index'),
-                'tasks-url' => route('api.v1.tasks.index'),
+                'tasks_url' => route('api.v1.tasks.index'),
                 'terms_url' => route('api.v1.terms.index'),
                 'tips_url' => route('api.v1.tips.index'),
             ]);

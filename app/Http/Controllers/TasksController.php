@@ -34,7 +34,7 @@ class TasksController extends Controller
         $this->validate($request, [
             'name' => 'required|string',
             'description' => 'required|string',
-            'assignee' => 'exists:member,id'
+            'assignee' => 'exists:member,id',
         ]);
 
         $task = new Task();
@@ -112,7 +112,7 @@ class TasksController extends Controller
             Task::findOrFail($id);
             Task::destroy($id);
 
-            return response('', Response::HTTP_NO_CONTENT);
+            return response(null, Response::HTTP_NO_CONTENT);
         } catch (ModelNotFoundException $e) {
             return new JsonResponse(
                 ['error' => 'not found'], Response::HTTP_NOT_FOUND
