@@ -36,7 +36,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'terms_url' => route('api.v1.terms.index'),
                 'tips_url' => route('api.v1.tips.index'),
 
-                'statistics_url' => route('api.v1.statistics.members'),
+                'statistics_members_url' => route('api.v1.statistics.members'),
             ]);
         }]);
 
@@ -132,7 +132,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ['except' => ['create', 'edit']]
         );
 
-//        Route::get('statistics/members', 'StatisticsController@getMembers');
-        Route::get('statistics/members', ['uses' => 'StatisticsController@getMembers', 'as' => 'statistics.members']);
+        // FIXME: naming the statistics routes is hardcoded given route() issue
+        Route::get('statistics/members', ['uses' => 'StatisticsController@getMembers', 'as' => 'api.v1.statistics.members']);
     });
 });
