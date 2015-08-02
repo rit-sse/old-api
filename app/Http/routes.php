@@ -35,6 +35,8 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
                 'tasks_url' => route('api.v1.tasks.index'),
                 'terms_url' => route('api.v1.terms.index'),
                 'tips_url' => route('api.v1.tips.index'),
+
+                'statistics_url' => route('api.v1.statistics.members'),
             ]);
         }]);
 
@@ -130,6 +132,7 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ['except' => ['create', 'edit']]
         );
 
-        Route::controller('statistics', 'StatisticsController');
+//        Route::get('statistics/members', 'StatisticsController@getMembers');
+        Route::get('statistics/members', ['uses' => 'StatisticsController@getMembers', 'as' => 'statistics.members']);
     });
 });
