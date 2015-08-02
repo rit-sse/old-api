@@ -36,5 +36,4 @@ class StatisticsController extends Controller
 
         return response()->json($result);
     }
-
 }
