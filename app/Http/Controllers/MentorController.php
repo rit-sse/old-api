@@ -54,7 +54,7 @@ class MentorController extends Controller
             return response()->json($mentor);
         } catch (ModelNotFoundException $e) {
             return new JsonResponse(
-                ['error' => 'not found'], Response::HTTP_NOT_FOUND,
+                ['error' => 'not found'], Response::HTTP_NOT_FOUND
             );
         }
     }
