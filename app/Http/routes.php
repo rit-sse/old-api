@@ -36,8 +36,8 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ]);
         }]);
 
-        Route::get(
-            'auth/token', 'Auth\AuthController@getToken'
+        Route::post(
+            'auth/{provider}', 'Auth\AuthController@getToken'
         );
 
         Route::delete('/agenda', 'AgendaController@clear');

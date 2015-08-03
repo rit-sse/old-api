@@ -15,19 +15,17 @@ use App\Role;
 
 class AuthController extends Controller
 {
-    public function getToken(Request $request)
+    public function getToken(Request $request, $providerName)
     {
         $this->validate($request, [
             'id' => 'required',
-            'provider' => 'required',
             'secret' => 'required',
         ]);
 
-        $queryParameters = $request->only(['id', 'provider', 'secret']);
+        $body = $request->only(['id', 'secret']);
 
-        $id = $queryParameters['id'];
-        $providerName = $queryParameters['provider'];
-        $secret = $queryParameters['secret'];
+        $id = $body['id'];
+        $secret = $body['secret'];
 
         $provider = AuthProviderFactory::create($providerName, $id, $secret);
 

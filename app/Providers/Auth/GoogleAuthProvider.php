@@ -5,6 +5,7 @@ namespace App\Providers\Auth;
 use App\Member;
 
 require_once 'vendor/google/apiclient/src/Google/Client.php';
+require_once 'vendor/google/apiclient/src/Google/Auth/Exception.php';
 
 class GoogleAuthProvider implements AuthProviderInterface {
 
@@ -23,11 +24,16 @@ class GoogleAuthProvider implements AuthProviderInterface {
     }
 
     public function verify() {
-        $ticket = $this->client->verifyIdToken($this->idToken);
-        if($ticket) {
-            $ticket->getAttributes();
-            $this->payload = $ticket->getAttributes()['payload'];
-            return $this->payload['hd'] == 'g.rit.edu';
+        try{
+            $ticket = $this->client->verifyIdToken($this->idToken);
+
+            if($ticket) {
+                $ticket->getAttributes();
+                $this->payload = $ticket->getAttributes()['payload'];
+                return $this->payload['hd'] == 'g.rit.edu';
+            }
+        } catch(\Google_Auth_Exception $e) {
+            return false;
         }
         return false;
     }
