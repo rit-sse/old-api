@@ -18,13 +18,11 @@ class Member extends Model
 
     protected $appends = [
         'memberships_url',
-        'profiles',
         'url'
     ];
 
     protected $hidden = [
         'deleted_at',
-        'externalProfiles',
         'memberships',
     ];
 
@@ -45,16 +43,8 @@ class Member extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'email',
+        'dce',
     ];
-
-    /**
-     * Establishes the One To Many relationship with ExternalProfile.
-     */
-    public function externalProfiles()
-    {
-        return $this->hasMany('App\ExternalProfile');
-    }
 
     /**
      * Establishes the inverse One To Many relationship with Group.
@@ -94,20 +84,6 @@ class Member extends Model
     public function getMembershipsUrlAttribute()
     {
         return route('api.v1.memberships.index', ['member' => $this->id]);
-    }
-
-    /**
-     * Profiles getter.
-     */
-    public function getProfilesAttribute()
-    {
-        $profiles = [];
-
-        foreach($this->externalProfiles as $profile) {
-            $profiles[$profile->provider] = $profile->identifier;
-        }
-
-        return $profiles;
     }
 
     /**

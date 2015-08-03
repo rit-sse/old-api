@@ -17,21 +17,9 @@ class InitialSchema extends Migration
 
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email')->unique();
+            $table->string('dce')->unique();
 
             $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('external_profiles', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('member_id')->unsigned();
-            $table->string('provider');
-            $table->string('identifier');
-
-            $table->foreign('member_id')->references('id')->on('members');
-
             $table->timestamps();
         });
 

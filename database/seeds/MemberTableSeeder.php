@@ -12,8 +12,7 @@ class MemberTableSeeder extends Seeder
     public function run()
     {
         factory('App\Member', 50)->create()->each(function ($member) {
-            $member->externalProfiles()
-                ->save(factory('App\ExternalProfile')->make());
+
         });
     }
 }

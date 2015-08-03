@@ -34,13 +34,6 @@ $factory->define(App\Event::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(App\ExternalProfile::class, function (Faker\Generator $faker) {
-    return [
-        'identifier' => 'U' . str_random(9),
-        'provider' => 'slack',
-    ];
-});
-
 $factory->define(App\Group::class, function (Faker\Generator $faker) {
     return [
         'officer_id' => $faker->numberBetween(1, 50),
@@ -59,7 +52,7 @@ $factory->define(App\Member::class, function (Faker\Generator $faker) {
     return [
         'first_name' => $faker->firstName(),
         'last_name' => $faker->lastName(),
-        'email' => $faker->regexify('[a-z]{2,3}\d{4}@g\.rit\.edu'),
+        'dce' => $faker->regexify('[a-z]{2,3}\d{4}'),
         'created_at' => $faker->dateTimeThisYear(),
         'updated_at' => $faker->dateTimeThisYear()
     ];
@@ -77,14 +70,6 @@ $factory->define(App\Tip::class, function (Faker\Generator $faker) {
     return [
         'body' => $faker->paragraph(),
         'member_id' => $faker->numberBetween(1, 50),
-    ];
-});
-
-/* Member->Profile Factory */
-$factory->define(App\ExternalProfile::class, function (Faker\Generator $faker) {
-    return [
-        'identifier' => 'U' . str_random(9),
-        'provider' => 'slack',
     ];
 });
 

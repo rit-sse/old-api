@@ -10,7 +10,7 @@ use JWTAuth;
 
 use App\Http\Controllers\Controller;
 use App\Member;
-use App\Providers\GoogleRitProvider;
+use App\Providers\Auth\AuthProviderFactory;
 use App\Role;
 
 class AuthController extends Controller
@@ -26,60 +26,41 @@ class AuthController extends Controller
         $queryParameters = $request->only(['id', 'provider', 'secret']);
 
         $id = $queryParameters['id'];
-        $provider = $queryParameters['provider'];
+        $providerName = $queryParameters['provider'];
         $secret = $queryParameters['secret'];
 
-        if (!(in_array($secret, config('auth.secrets')))) {
+        $provider = AuthProviderFactory::create($providerName, $id, $secret);
+
+        if(!$provider) {
             return new JsonResponse(
-                ['error' => 'invalid secret'], Response::HTTP_FORBIDDEN
+                ['error' => 'invalid provider'], Response::HTTP_UNPROCESSABLE_ENTITY
             );
         }
 
-        $member = Member::whereHas(
-            'externalProfiles', function ($query) use ($id, $provider) {
-                $query->where('identifier', $id);
-                $query->where('provider', $provider);
-            }
-        );
 
-        try {
-            $member = $member->firstOrFail();
-
-            $token = JWTAuth::fromUser(
-                $member,
-                [
-                    'level' => config('auth.levels.low'),
-                    'member' => $member,
-                ]
-            );
-
-            return response()->json(['token' => $token]);
-        } catch (ModelNotFoundException $e) {
+        if(!$provider->verify()) {
             return new JsonResponse(
-                ['error' => 'not found'], Response::HTTP_NOT_FOUND
+                ['error' => 'invalid id or secret'], Response::HTTP_UNAUTHORIZED
             );
         }
-    }
 
-    /**
-     * Redirect the user to the GitHub authentication page.
-     *
-     * @return Response
-     */
-    public function redirectToProvider(Request $request)
-    {
-        $callback = $request->input('callback');
+        $member = $provider->findOrCreateMember();
+        $member->save();
+        if (!($member->hasRole('member'))) {
+            $member->attachRole(
+                Role::where('name', 'member')->firstOrFail()
+            );
+        }
 
-        $provider = new GoogleRitProvider(
-            $request,
-            $callback
+        $token = JWTAuth::fromUser(
+            $member,
+            [
+                'level' => $provider->authLevel(),
+                'member' => $member
+            ]
         );
 
-        $provider->scopes(
-            ['email', 'profile']
-        );
-
-        return $provider->redirect();
+        return response()->json(['token' => $token]);
     }
 
     /**

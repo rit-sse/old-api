@@ -30,5 +30,6 @@ class Kernel extends HttpKernel
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'csrf' => \App\Http\Middleware\VerifyCsrfToken::class,
         'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'jwt.refresh' => \Tymon\JWTAuth\Middleware\RefreshToken::class
     ];
 }
