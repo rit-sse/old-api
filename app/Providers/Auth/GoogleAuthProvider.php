@@ -6,7 +6,7 @@ use App\Member;
 
 require_once 'vendor/google/apiclient/src/Google/Client.php';
 
-class GoogleAuthProvider implements AuthProvider {
+class GoogleAuthProvider implements AuthProviderInterface {
 
     private $dce;
     private $idToken;

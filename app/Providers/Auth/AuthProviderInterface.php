@@ -2,7 +2,7 @@
 
 namespace App\Providers\Auth;
 
-interface AuthProvider {
+interface AuthProviderInterface {
 
     public function verify();
     public function authLevel();

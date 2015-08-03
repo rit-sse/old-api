@@ -223,6 +223,7 @@ class InitialSchema extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->integer('level')->default(1000);
             $table->timestamps();
         });
 
@@ -248,7 +249,6 @@ class InitialSchema extends Migration
     public function down()
     {
         Schema::drop('members');
-        Schema::drop('external_profiles');
         Schema::drop('terms');
         Schema::drop('memberships');
         Schema::drop('officers');

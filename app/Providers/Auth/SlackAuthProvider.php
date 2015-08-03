@@ -4,7 +4,7 @@ namespace App\Providers\Auth;
 
 use App\Member;
 
-class SlackAuthProvider implements AuthProvider {
+class SlackAuthProvider implements AuthProviderInterface {
 
         private $dce;
         private $secret;

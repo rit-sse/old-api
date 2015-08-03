@@ -4,6 +4,7 @@
  */
 
 namespace App;
+use Log;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -92,5 +93,34 @@ class Member extends Model
     public function getUrlAttribute()
     {
         return route('api.v1.members.show', ['id' => $this->id]);
+    }
+
+    public function can($permission, $level, $requireAll = false)
+    {
+        if (is_array($permission)) {
+            foreach ($permission as $permName) {
+                $hasPerm = $this->can($permName, $level);
+                if ($hasPerm && !$requireAll) {
+                    return true;
+                } elseif (!$hasPerm && $requireAll) {
+                    return false;
+                }
+            }
+            // If we've made it this far and $requireAll is FALSE, then NONE of the perms were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the perms were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            foreach ($this->roles as $role) {
+                // Validate against the Permission table
+                foreach ($role->perms as $perm) {
+                    Log::info($perm->level);
+                    if ($perm->name == $permission && $perm->level <= $level) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }
