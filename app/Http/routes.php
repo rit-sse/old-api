@@ -37,6 +37,10 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
         }]);
 
         Route::post(
+            'auth/refresh', 'Auth\AuthController@refreshToken'
+        );
+
+        Route::post(
             'auth/{provider}', 'Auth\AuthController@getToken'
         );
 

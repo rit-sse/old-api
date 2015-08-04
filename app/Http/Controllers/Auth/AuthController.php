@@ -15,6 +15,11 @@ use App\Role;
 
 class AuthController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('jwt.refresh', ['only' => ['refreshToken']]);
+    }
+
     public function getToken(Request $request, $providerName)
     {
         $this->validate($request, [
@@ -60,4 +65,10 @@ class AuthController extends Controller
 
         return response()->json(['token' => $token]);
     }
+
+    public function refreshToken(Request $request) {
+        response()->json();
+    }
+
+
 }

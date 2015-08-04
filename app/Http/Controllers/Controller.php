@@ -12,8 +12,6 @@ abstract class Controller extends BaseController
 
     public function __construct()
     {
-
         $this->middleware('auth', ['only' => ['store', 'update', 'destroy']]);
-        $this->middleware('jwt.refresh', ['only' => ['store', 'update', 'destroy']]);
     }
 }
