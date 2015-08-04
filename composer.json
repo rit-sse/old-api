@@ -14,7 +14,8 @@
         "doctrine/dbal": "~2.5",
         "laravel/socialite": "^2.0",
         "tymon/jwt-auth": "^0.5.4",
-        "zizaco/entrust": "~1.4"
+        "zizaco/entrust": "~1.4",
+        "google/apiclient": "1.0.*@beta"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

@@ -4,6 +4,7 @@
  */
 
 namespace App;
+use Log;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -18,13 +19,11 @@ class Member extends Model
 
     protected $appends = [
         'memberships_url',
-        'profiles',
         'url'
     ];
 
     protected $hidden = [
         'deleted_at',
-        'externalProfiles',
         'memberships',
     ];
 
@@ -45,16 +44,8 @@ class Member extends Model
     protected $fillable = [
         'first_name',
         'last_name',
-        'email',
+        'dce',
     ];
-
-    /**
-     * Establishes the One To Many relationship with ExternalProfile.
-     */
-    public function externalProfiles()
-    {
-        return $this->hasMany('App\ExternalProfile');
-    }
 
     /**
      * Establishes the inverse One To Many relationship with Group.
@@ -97,24 +88,39 @@ class Member extends Model
     }
 
     /**
-     * Profiles getter.
-     */
-    public function getProfilesAttribute()
-    {
-        $profiles = [];
-
-        foreach($this->externalProfiles as $profile) {
-            $profiles[$profile->provider] = $profile->identifier;
-        }
-
-        return $profiles;
-    }
-
-    /**
      * IETF url getter.
      */
     public function getUrlAttribute()
     {
         return route('api.v1.members.show', ['id' => $this->id]);
+    }
+
+    public function can($permission, $level, $requireAll = false)
+    {
+        if (is_array($permission)) {
+            foreach ($permission as $permName) {
+                $hasPerm = $this->can($permName, $level);
+                if ($hasPerm && !$requireAll) {
+                    return true;
+                } elseif (!$hasPerm && $requireAll) {
+                    return false;
+                }
+            }
+            // If we've made it this far and $requireAll is FALSE, then NONE of the perms were found
+            // If we've made it this far and $requireAll is TRUE, then ALL of the perms were found.
+            // Return the value of $requireAll;
+            return $requireAll;
+        } else {
+            foreach ($this->roles as $role) {
+                // Validate against the Permission table
+                foreach ($role->perms as $perm) {
+                    Log::info($perm->level);
+                    if ($perm->name == $permission && $perm->level <= $level) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 }

@@ -10,9 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::get('/go/{go_link}', 'LinkController@resolveLink');
-
 Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
     Route::get('/', ['as' => 'api', function () {
         return response()->json([
@@ -39,16 +36,12 @@ Route::group(['middleware' => 'csrf', 'prefix' => 'api'], function () {
             ]);
         }]);
 
-        // Authentication routes
-        Route::get(
-            'auth/google', 'Auth\AuthController@redirectToProvider'
+        Route::post(
+            'auth/refresh', 'Auth\AuthController@refreshToken'
         );
-        Route::get(
-            'auth/google/callback',
-            'Auth\AuthController@handleProviderCallback'
-        );
-        Route::get(
-            'auth/token', 'Auth\AuthController@getToken'
+
+        Route::post(
+            'auth/{provider}', 'Auth\AuthController@getToken'
         );
 
         Route::delete('/agenda', 'AgendaController@clear');

@@ -17,21 +17,9 @@ class InitialSchema extends Migration
 
             $table->string('first_name');
             $table->string('last_name');
-            $table->string('email')->unique();
+            $table->string('dce')->unique();
 
             $table->softDeletes();
-            $table->timestamps();
-        });
-
-        Schema::create('external_profiles', function (Blueprint $table) {
-            $table->increments('id');
-
-            $table->integer('member_id')->unsigned();
-            $table->string('provider');
-            $table->string('identifier');
-
-            $table->foreign('member_id')->references('id')->on('members');
-
             $table->timestamps();
         });
 
@@ -235,6 +223,7 @@ class InitialSchema extends Migration
             $table->string('name')->unique();
             $table->string('display_name')->nullable();
             $table->string('description')->nullable();
+            $table->integer('level')->default(1000);
             $table->timestamps();
         });
 
@@ -260,7 +249,6 @@ class InitialSchema extends Migration
     public function down()
     {
         Schema::drop('members');
-        Schema::drop('external_profiles');
         Schema::drop('terms');
         Schema::drop('memberships');
         Schema::drop('officers');

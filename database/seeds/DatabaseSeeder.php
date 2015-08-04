@@ -26,6 +26,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AgendaItemTableSeeder::class);
         $this->call(RolesTableSeeder::class);
         $this->call(TaskTableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
 
         Model::reguard();
     }
